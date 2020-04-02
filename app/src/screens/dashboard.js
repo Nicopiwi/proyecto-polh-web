@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 class DashboardScreen extends Component {
 
     logOut(){
         localStorage.removeItem('userId')
         localStorage.removeItem('userToken')
-        console.log('s')
-        return <Redirect to="/"></Redirect>
+        this.props.history.push('/')
     }
 
     render = ()=>{
