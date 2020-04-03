@@ -138,7 +138,7 @@ const Register = (props) => {
                 onKeyPress={(e)=>handleKeyPress(e)}
               />
               {userType && (
-                  <FormControl  fullWidth color="secondary">
+                  <FormControl margin="normal" fullWidth color="secondary">
                 <InputLabel id="obra-social-label">Obra Social</InputLabel>
               <Select
                 error={error}

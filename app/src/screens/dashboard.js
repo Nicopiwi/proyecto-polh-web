@@ -1,23 +1,165 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import RecetaIcon from '@material-ui/icons/Assignment';
+import CrearIcon from '@material-ui/icons/Create';
+import MenuIcon from '@material-ui/icons/Menu';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import MakeRecipe from './makeRecipe'
+import MyRecipes from './myRecipes'
+import { withRouter, Route, Switch } from 'react-router-dom'
 
-class DashboardScreen extends Component {
+const drawerWidth = 240;
 
-    logOut(){
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
+
+function DashboardScreen(props) {
+    const { container } = props;
+    const classes = useStyles();
+    const theme = useTheme();
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+  
+    const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+    };
+
+    const logOut=()=>{
         localStorage.removeItem('userId')
         localStorage.removeItem('userToken')
-        this.props.history.push('/')
+        props.history.push('/')
     }
 
-    render = ()=>{
-        return (
-            <div>
-               <button onClick={()=>this.logOut()}>
-                Cerrar sesion
-               </button>
-            </div>
-        );
-    }
-}
+  
+    const drawer = (
+      <div>
+        <div className={classes.toolbar} />
+        <Divider />
+        <List>
+            <ListItem button onClick={()=>{props.history.push('/dashboard/misrecetas')}}>
+              <ListItemIcon>
+                  <RecetaIcon />
+                </ListItemIcon>
+              <ListItemText primary={"Mis Recetas"} />
+            </ListItem>
+            <ListItem button onClick={()=>{props.history.push('/dashboard/crearrecetas')}}>
+              <ListItemIcon>
+                  <CrearIcon />
+                </ListItemIcon>
+              <ListItemText primary={"Crear Receta"} />
+            </ListItem>
+            <Divider />
+            <ListItem button onClick={()=>logOut()}>
+              <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+              <ListItemText primary={"Cerrar Sesión"} />
+            </ListItem>
+        </List>
+      </div>
+    );
+  
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+                Dashboard | Usuario ...
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, 
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+            <Switch>
+                <Route exact path="/dashboard" component={MyRecipes} />
+                <Route exact path="/dashboard/misrecetas" component={MyRecipes} />
+                <Route exact path="/dashboard/crearrecetas" component={MakeRecipe} />
+            </Switch>
+        </main>
+      </div>
+    );
+  }
+  
 
 export default withRouter(DashboardScreen);
