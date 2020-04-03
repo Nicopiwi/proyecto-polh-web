@@ -11,14 +11,18 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import RecetaIcon from '@material-ui/icons/Assignment';
 import CrearIcon from '@material-ui/icons/Create';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { withRouter, Route, Switch } from 'react-router-dom'
 import MakeRecipe from './makeRecipe'
 import MyRecipes from './myRecipes'
-import { withRouter, Route, Switch } from 'react-router-dom'
+import Profile from './profile'
+
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -59,6 +63,7 @@ function DashboardScreen(props) {
     const { container } = props;
     const classes = useStyles();
     const theme = useTheme();
+    const userName = useSelector(state => state.user.userName);
     const [mobileOpen, setMobileOpen] = React.useState(false);
   
     const handleDrawerToggle = () => {
@@ -90,6 +95,12 @@ function DashboardScreen(props) {
               <ListItemText primary={"Crear Receta"} />
             </ListItem>
             <Divider />
+            <ListItem button onClick={()=>{props.history.push('/dashboard/cuenta')}}>
+            <ListItemIcon>
+                <AccountCircleIcon/>
+            </ListItemIcon>
+              <ListItemText primary={"Cuenta"} />
+            </ListItem>
             <ListItem button onClick={()=>logOut()}>
               <ListItemIcon>
                   <LogoutIcon />
@@ -115,7 +126,7 @@ function DashboardScreen(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-                Dashboard | Usuario ...
+                Recetas | Usuario {userName}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -155,6 +166,7 @@ function DashboardScreen(props) {
                 <Route exact path="/dashboard" component={MyRecipes} />
                 <Route exact path="/dashboard/misrecetas" component={MyRecipes} />
                 <Route exact path="/dashboard/crearrecetas" component={MakeRecipe} />
+                <Route exact path="/dashboard/cuenta" component={Profile} />
             </Switch>
         </main>
       </div>

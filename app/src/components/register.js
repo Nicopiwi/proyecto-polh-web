@@ -52,6 +52,7 @@ const Register = (props) => {
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [matricula, setMatricula] = useState('');
   const [obraSocial, setObraSocial] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState(false);
@@ -60,31 +61,35 @@ const Register = (props) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (username.trim() && password.trim() && firstName.trim() && lastName.trim()) {
+    if (username.trim() && password.trim() && firstName.trim() && lastName.trim() && matricula.trim()) {
       setIsButtonDisabled(false);
-      if (password.length!==42){
-        setError(true);
-        setHelperText("El address debe ser de 42 caracteres, incluyendo el prefijo '0x'")
-      }
+
     } else {
         setError(false);
         setHelperText("")
         setIsButtonDisabled(true);
     }
-  }, [username, password, firstName, lastName]);
+  }, [username, password, firstName, lastName, matricula]);
 
   const handleRegister = () => {
 
-
-    if (username === 'abc@email.com' && password === 'password') {
-        setError(false);
-        localStorage.setItem('userId', 0)
-        localStorage.setItem('userToken', 'token')
-        props.history.push('/dashboard')
-    } else {
+      if (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(username)){
+        if (/^[0-9]*$/.test(matricula)){
+          setError(false);
+          localStorage.setItem('userId', 0)
+          localStorage.setItem('userToken', 'token')
+          props.history.push('/dashboard')
+        }
+        else{
+          setError(true);
+          setHelperText('Matrícula incorrecta. Asegúrese de que sólo contenga numeros')
+        }
+      }
+      else{
         setError(true);
-        setHelperText('Nombre de usuario o contraseña incorrectos')
-    }
+        setHelperText('Dirección de email incorrecta')
+      }
+        
   };
 
   const handleClickShowPassword = () => {
@@ -137,6 +142,17 @@ const Register = (props) => {
                 onChange={(e)=>setUsername(e.target.value)}
                 onKeyPress={(e)=>handleKeyPress(e)}
               />
+              {!userType && (<TextField
+                error={error}
+                fullWidth
+                id="matricula"
+                type="text"
+                label="Matricula Nacional"
+                placeholder="00000"
+                margin="normal"
+                onChange={(e)=>setMatricula(e.target.value)}
+                onKeyPress={(e)=>handleKeyPress(e)}
+              />)}
               {userType && (
                   <FormControl margin="normal" fullWidth color="secondary">
                 <InputLabel id="obra-social-label">Obra Social</InputLabel>
@@ -144,7 +160,7 @@ const Register = (props) => {
                 error={error}
                 margin="normal"
                 id="obra-social"
-                placeholder="Address"
+                placeholder="Obra social"
                 value={obraSocial}
                 onChange={(e)=>setObraSocial(e.target.value)}
                 >
@@ -156,8 +172,8 @@ const Register = (props) => {
                 fullWidth
                 id="password"
                 type={showPassword?'text':'password'}
-                label="Address"
-                placeholder="Address"
+                label="Contraseña"
+                placeholder="Contraseña"
                 margin="normal"
                 helperText={helperText}
                 onChange={(e)=>setPassword(e.target.value)}

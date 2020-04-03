@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -10,7 +11,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+
 import { withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { login } from '../redux/actions/userActions';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -58,6 +63,7 @@ const Login = (props) => {
 
     if (username === 'abc@email.com' && password === 'password') {
         setError(false);
+        props.login()
         localStorage.setItem('userId', 0)
         localStorage.setItem('userToken', 'token')
         props.history.push('/dashboard')
@@ -100,8 +106,8 @@ const Login = (props) => {
                 fullWidth
                 id="password"
                 type={showPassword?'text':'password'}
-                label="Address"
-                placeholder="Address"
+                label="Contraseña"
+                placeholder="Contraseña"
                 margin="normal"
                 helperText={helperText}
                 onChange={(e)=>setPassword(e.target.value)}
@@ -136,4 +142,5 @@ const Login = (props) => {
   );
 }
 
-export default withRouter(Login);
+
+export default connect(null, { login })(withRouter(Login));
