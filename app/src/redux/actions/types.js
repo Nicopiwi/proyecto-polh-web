@@ -1,2 +1,3 @@
-const LOGIN = "LOGIN"
-export default LOGIN
+export const LOGIN = "LOGIN"
+export const MODIFY_USERDATA = "MODIFY_USERDATA"
+export const CREATE_RECIPE = "CREATE_RECIPE"

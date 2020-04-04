@@ -1,4 +1,3 @@
-import LOGIN from './types';
 import APIs from '../../APIs'
 
 export const login = () => dispatch => {
@@ -6,8 +5,16 @@ export const login = () => dispatch => {
       .then(res => res.json())
       .then(res =>
         dispatch({
-          type: LOGIN,
+          type: 'LOGIN',
           payload: res.results[0].name.first
         })
       );
   };
+
+  
+export const modifyUser = (userData) => dispatch => {
+    dispatch({
+      type: 'MODIFY_USERDATA',
+      payload: userData
+    })
+};

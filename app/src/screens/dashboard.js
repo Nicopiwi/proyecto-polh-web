@@ -30,6 +30,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+  title:{
+    left: '50%',
+    alignSelf:'center'
+  },
+  cover:{
+    width:'100%',
+    height:'calc(100% - 64px);'
+  },
   drawer: {
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
@@ -79,7 +87,10 @@ function DashboardScreen(props) {
   
     const drawer = (
       <div>
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}>
+          <div className={classes.cover}>
+          </div>
+          </div>
         <Divider />
         <List>
             <ListItem button onClick={()=>{props.history.push('/dashboard/misrecetas')}}>

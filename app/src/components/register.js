@@ -16,6 +16,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { login } from '../redux/actions/userActions';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -60,6 +62,8 @@ const Register = (props) => {
   const [helperText, setHelperText] = useState('');
   const [error, setError] = useState(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (username.trim() && password.trim() && firstName.trim() && lastName.trim() && matricula.trim()) {
       setIsButtonDisabled(false);
@@ -76,6 +80,8 @@ const Register = (props) => {
       if (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(username)){
         if (/^[0-9]*$/.test(matricula)){
           setError(false);
+          //Handlear el register acá, y luego despachar la funcion login
+          dispatch(login())
           localStorage.setItem('userId', 0)
           localStorage.setItem('userToken', 'token')
           props.history.push('/dashboard')

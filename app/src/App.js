@@ -3,12 +3,14 @@ import LoginScreen from './screens/loginScreen'
 import DashboardScreen from './screens/dashboard'
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import store from './redux/store';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import './App.css';
 
 function App() {
   return (
     <Provider store={store}>
+      <PersistGate persistor={persistor}>
       <Router>
         <div className="App">
             <Route exact path="/" render={(props)=>(
@@ -20,6 +22,7 @@ function App() {
             
         </div>
       </Router>
+      </PersistGate>
     </Provider>
   );
 }
