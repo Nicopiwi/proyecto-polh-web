@@ -12,9 +12,37 @@ export const login = () => dispatch => {
   };
 
   
-export const modifyUser = (userData) => dispatch => {
+export const modifyUserName = (userName) => dispatch => {
     dispatch({
-      type: 'MODIFY_USERDATA',
-      payload: userData
+      type: 'MODIFY_USERNAME',
+      payload: userName
     })
+};
+
+export const modifyPassword = (userPassword) => dispatch => {
+  dispatch({
+    type: 'MODIFY_PASSWORD',
+    payload: userPassword
+  })
+};
+
+export const modifyMatricula = (userMatricula) => dispatch => {
+  dispatch({
+    type: 'MODIFY_MATRICULA',
+    payload: userMatricula
+  })
+};
+
+export const modifyEmail = (userEmail) => dispatch => {
+  dispatch({
+    type: 'MODIFY_EMAIL',
+    payload: userEmail
+  })
+};
+
+export const modifyKeys = (userKeys) => dispatch => {
+  dispatch({
+    type: 'MODIFY_KEYS',
+    payload: userKeys
+  })
 };
