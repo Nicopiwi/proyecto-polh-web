@@ -5,13 +5,14 @@ import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import CreateIcon from '@material-ui/icons/Create';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+
+import { useSelector } from "react-redux";
 
 
 const useStyles = makeStyles((theme) =>
@@ -35,6 +36,20 @@ const Profile = (props) =>{
     const [editMode, setEditMode] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showPrivate, setShowPrivate] = useState(false);
+    const [newUserName, setNewUserName] = useState('');
+    const [newUserSurname, setNewUserSurname] = useState('');
+    const [newUserPassword, setNewUserPassword] = useState('');
+    const [newUserMatricula, setNewUserMatricula] = useState('');
+    const [newUserEmail, setNewUserEmail] = useState('');
+
+    const userName = useSelector(state => state.user.userName);
+    const userSurname = useSelector(state => state.user.userSurname);
+    const userMatricula = useSelector(state => state.user.userName);
+    const userEmail = useSelector(state => state.user.userEmail);
+    const userAddress = useSelector(state => state.user.userAddress);
+    const userHash = useSelector(state => state.user.userHash);
+    const userPublicKey = useSelector(state => state.user.userPublicKey);
+    const userPrivateKey = useSelector(state => state.user.userPrivateKey);
     return (
         <Fragment>
             <Card fullWidth>
@@ -52,7 +67,7 @@ const Profile = (props) =>{
                      disabled={!editMode} id="standard-disabled" 
                     label="Nombre" 
                     variant="filled"
-                    defaultValue="Nico" 
+                    defaultValue={userName} 
                     className={classes.spaced}
                     />
                     <TextField 
@@ -60,7 +75,7 @@ const Profile = (props) =>{
                     label="Apellido" 
                     variant="filled"
                     className={classes.spaced}
-                    defaultValue="Rozen" />
+                    defaultValue={userSurname} />
                     {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
 
                 </div>
@@ -72,7 +87,7 @@ const Profile = (props) =>{
                     disabled={!editMode}
                     className={classes.textInput + ' ' + classes.spaced}
                     variant="filled"
-                    defaultValue="abc@email.com"
+                    defaultValue={userEmail}
                 />
                 {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
                 </div>
@@ -84,7 +99,7 @@ const Profile = (props) =>{
                 disabled={!editMode}
                 className={classes.spaced}
                 variant="filled"
-                defaultValue="password"
+                defaultValue=""
                 InputProps={{
                     endAdornment: (<InputAdornment position="end">
                     <IconButton
@@ -106,7 +121,7 @@ const Profile = (props) =>{
                     disabled={!editMode}
                     className={classes.textInput + ' ' + classes.spaced}
                     variant="filled"
-                    defaultValue="00000"
+                    defaultValue={userMatricula}
                 />
                 {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
                 </div>
@@ -115,28 +130,28 @@ const Profile = (props) =>{
                     id="address"
                     type={'text'}
                     label="Address"
-                    disabled={!editMode}
+                    disabled
                     className={classes.textInput + ' ' + classes.spaced}
                     variant="filled"
-                    defaultValue="0x"
+                    defaultValue={userHash}
                 />
-                {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
+                
                 </div>
                 <div className={classes.container}>
                     <TextField 
-                    disabled={!editMode} id="standard-disabled" 
+                    disabled id="standard-disabled" 
                     label="Clave pública" 
                     variant="filled"
-                    defaultValue="0x" 
+                    defaultValue={userPublicKey} 
                     className={classes.spaced}
                     />
                     <TextField 
-                    disabled={!editMode} id="standard-disabled" 
+                    disabled id="standard-disabled" 
                     label="Clave privada" 
                     variant="filled"
                     type={showPrivate?'text':'password'}
                     className={classes.spaced}
-                    defaultValue="0x" 
+                    defaultValue={userPrivateKey} 
                     InputProps={{
                         endAdornment: (<InputAdornment position="end">
                         <IconButton
@@ -148,7 +163,6 @@ const Profile = (props) =>{
                       </InputAdornment>),
                       }}
                   />
-                    {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
 
                 </div>
                 

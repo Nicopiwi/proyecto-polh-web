@@ -15,9 +15,10 @@ import IconButton from '@material-ui/core/IconButton';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { login } from '../redux/actions/userActions';
+import APIs from '../APIs'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -61,8 +62,8 @@ const Register = (props) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [helperText, setHelperText] = useState('');
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (username.trim() && password.trim() && firstName.trim() && lastName.trim() && matricula.trim()) {
@@ -75,16 +76,33 @@ const Register = (props) => {
     }
   }, [username, password, firstName, lastName, matricula]);
 
-  const handleRegister = () => {
-
+  const handleRegister = async () => {
+      localStorage.clear()
       if (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(username)){
         if (/^[0-9]*$/.test(matricula)){
           setError(false);
-          //Handlear el register acá, y luego despachar la funcion login
-          dispatch(login())
-          localStorage.setItem('userId', 0)
-          localStorage.setItem('userToken', 'token')
-          props.history.push('/dashboard')
+          setIsButtonDisabled(true)
+          setLoading(true)
+          try{
+            await fetch(APIs.rest.registerMedico,{
+              method:'POST',
+              headers:{
+                'Content-Type': 'application/json',
+              },
+              body:JSON.stringify({email:username,
+               password:password, 
+               name:firstName, 
+               surname: lastName, 
+               matricula:parseInt(matricula)})})
+            
+              props.history.push('/dashboard')
+          }
+          catch(e){
+            setLoading(false)
+            setIsButtonDisabled(false)
+            console.log(e)
+          }
+         
         }
         else{
           setError(true);
@@ -205,7 +223,8 @@ const Register = (props) => {
               className={classes.loginBtn}
               onClick={()=>handleRegister()}
               disabled={isButtonDisabled}>
-              Registrarse
+             {loading && <CircularProgress color="secondary" size={14} />}
+            {!loading && 'Registrarse'}
             </Button>
           </CardActions>
         </Card>

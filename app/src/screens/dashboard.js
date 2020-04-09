@@ -71,7 +71,7 @@ function DashboardScreen(props) {
     const { container } = props;
     const classes = useStyles();
     const theme = useTheme();
-    const userName = useSelector(state => state.user.userName);
+    const userName = useSelector(state => `${state.user.userName} ${state.user.userSurname}`);
     const [mobileOpen, setMobileOpen] = React.useState(false);
   
     const handleDrawerToggle = () => {
@@ -112,6 +112,7 @@ function DashboardScreen(props) {
             </ListItemIcon>
               <ListItemText primary={"Cuenta"} />
             </ListItem>
+            <Divider />
             <ListItem button onClick={()=>logOut()}>
               <ListItemIcon>
                   <LogoutIcon />
@@ -137,7 +138,7 @@ function DashboardScreen(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-                Recetas | Usuario {userName}
+                Recetas | Usuario {userName} {}
             </Typography>
           </Toolbar>
         </AppBar>

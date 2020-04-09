@@ -15,7 +15,10 @@ import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { login } from '../redux/actions/userActions';
+import { login, nullErrors } from '../redux/actions/userActions';
+
+//https://medium.com/@kkomaz/react-to-async-await-553c43f243e2
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -41,6 +44,10 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
+const mapStateToProps = state => ({
+  loginError: state.user.loginError
+});
+
 const Login = (props) => {
   const classes = useStyles();
   const [username, setUsername] = useState('');
@@ -58,19 +65,21 @@ const Login = (props) => {
     }
   }, [username, password]);
 
-  const handleLogin = () => {
+  
 
-
-    if (username === 'abc@email.com' && password === 'password') {
+  const handleLogin = async () => {
+        props.nullErrors("LOGIN")
         setError(false);
-        props.login()
-        localStorage.setItem('userId', 0)
-        localStorage.setItem('userToken', 'token')
-        props.history.push('/dashboard')
-    } else {
-        setError(true);
-        setHelperText('Nombre de usuario o contraseña incorrectos')
-    }
+        let loginRet = await props.login(username, password)
+        console.log(loginRet)
+        if(!loginRet) {
+          setError(true);
+          setHelperText('Nombre de usuario o contraseña incorrectos')
+        }
+        else{
+          console.log('aaaaa')
+          props.history.push("/dashboard")
+        }
   };
 
   const handleClickShowPassword = () => {
@@ -143,4 +152,4 @@ const Login = (props) => {
 }
 
 
-export default connect(null, { login })(withRouter(Login));
+export default connect(mapStateToProps, { login, nullErrors })(withRouter(Login));

@@ -1,10 +1,10 @@
-const BASE_URL = ""
+const BASE_URL = "http://localhost:8080"
 
 const APIs = {
     rest:{
-        loginMedico:`${BASE_URL}/medic/login`,
+        loginMedico:`${BASE_URL}/medico/login`,
         loginPaciente:`${BASE_URL}/patient/login`,
-        registerMedico:`${BASE_URL}/medic/register`,
+        registerMedico:`${BASE_URL}/medico/register`,
         registerPaciente:`${BASE_URL}/patient/register`,
         createReceta:`${BASE_URL}/patient/create-receta`,
     },
