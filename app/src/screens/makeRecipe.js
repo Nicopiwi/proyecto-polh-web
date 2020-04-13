@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './css/dashboard.css'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 
+import { useDispatch, useSelector } from "react-redux";
+import { createRecipe } from "../redux/actions/recipeActions";
+
+import APIs from '../APIs'
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -20,6 +24,28 @@ const useStyles = makeStyles((theme) =>
 
 const MakeRecipes = (props) =>{
     const classes = useStyles();
+    const [recipeText, setRecipeText] = useState('');
+    const [address, setAddress] = useState('');
+    const dispatch = useDispatch();
+    const medicParams = useSelector(state => {
+        return {
+            address: state.user.userAddress,
+            publicKey: state.user.userPublicKey,
+            privateKey: state.user.userPrivateKey
+        }
+    });
+
+    const handleSubmit = async ()=>{
+        let headers = new Headers();
+        headers.append('token', localStorage.getItem('userToken'));
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        let created = await dispatch(createRecipe(medicParams, {address: address}, recipeText))
+        if (created){
+            await setRecipeText('')
+            await setAddress('')
+        }
+    }
     return (
         <React.Fragment>
             <div className={classes.container}>
@@ -34,10 +60,11 @@ const MakeRecipes = (props) =>{
                 maxLength={500}
                 variant="filled"
                 className={classes.spaced}
+                onChange={(e)=>setRecipeText(e.target.value)}
                 />
 
-                <TextField className={classes.spaced} id="filled-basic" fullWidth label="Destinatario (Address)" variant="filled" />
-                <Button className={classes.spaced} variant="contained" color="secondary">Enviar</Button>
+                <TextField onChange={(e)=>setAddress(e.target.value)} className={classes.spaced} id="filled-basic" fullWidth label="Destinatario (Address)" variant="filled" />
+                <Button onClick={()=>handleSubmit()} className={classes.spaced} variant="contained" color="secondary">Enviar</Button>
             </div>
             
             

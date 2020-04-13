@@ -29,3 +29,7 @@
   .botonesCrearReceta{
       display:block
   }
+
+  #recipesList {
+    list-style-type: none;
+  }

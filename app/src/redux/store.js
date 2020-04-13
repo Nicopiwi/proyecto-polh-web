@@ -7,13 +7,13 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import createEncryptor from 'redux-persist-transform-encrypt'
 //Sacar si es necesario
 //import immutableTransform from 'redux-persist-transform-immutable'
-
+require('dotenv').config();
 const initialState = {};
 
 const middleware = [thunk];
 
 const encryptor = createEncryptor({
-  secretKey: 'key-pohl-recetas',
+  secretKey: process.env.REACT_APP_ENCRYPT_PHRASE,
   onError: function(error) {
     // Handle the error.
     console.log('error encrypt')
@@ -22,7 +22,7 @@ const encryptor = createEncryptor({
 })
 
 const persistConfig = {
-  transforms: [encryptor],
+  //transforms: [encryptor],
   key: 'root',
   storage: storage,
   stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.

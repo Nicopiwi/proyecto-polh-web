@@ -79,7 +79,6 @@ function DashboardScreen(props) {
     };
 
     const logOut=()=>{
-        localStorage.removeItem('userId')
         localStorage.removeItem('userToken')
         props.history.push('/')
     }

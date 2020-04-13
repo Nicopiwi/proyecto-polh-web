@@ -11,6 +11,7 @@ export const login = (email, password) => dispatch => {
       .then(res => res.json())
       .then(res => {
           localStorage.setItem('userToken', res.token)
+          console.log(res.user.publicKey)
           dispatch({
             type: 'LOGIN',
             payload: {

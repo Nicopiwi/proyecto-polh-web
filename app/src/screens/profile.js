@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) =>
     },
     textInput:{
         width: '275px'
-    }
+    },
   }),
 );
 
@@ -41,10 +41,10 @@ const Profile = (props) =>{
     const [newUserPassword, setNewUserPassword] = useState('');
     const [newUserMatricula, setNewUserMatricula] = useState('');
     const [newUserEmail, setNewUserEmail] = useState('');
-
+    
     const userName = useSelector(state => state.user.userName);
     const userSurname = useSelector(state => state.user.userSurname);
-    const userMatricula = useSelector(state => state.user.userName);
+    const userMatricula = useSelector(state => state.user.userMatricula);
     const userEmail = useSelector(state => state.user.userEmail);
     const userAddress = useSelector(state => state.user.userAddress);
     const userHash = useSelector(state => state.user.userHash);
@@ -56,22 +56,22 @@ const Profile = (props) =>{
             <CardHeader 
             title="Editar datos de la cuenta"
             action={
-                <IconButton aria-label="edit">
-                    <CreateIcon onClick={()=>setEditMode(!editMode)}/>
+                <IconButton aria-label="edit" onClick={()=>setEditMode(!editMode)}>
+                    <CreateIcon />
                 </IconButton>
             }
             />
             <CardContent>
                 <div className={classes.container}>
                     <TextField 
-                     disabled={!editMode} id="standard-disabled" 
+                     disabled={!editMode} id="nombre-textbox" 
                     label="Nombre" 
                     variant="filled"
                     defaultValue={userName} 
                     className={classes.spaced}
                     />
                     <TextField 
-                     disabled={!editMode} id="standard-disabled" 
+                     disabled={!editMode} id="apellido-textbox" 
                     label="Apellido" 
                     variant="filled"
                     className={classes.spaced}
@@ -131,24 +131,29 @@ const Profile = (props) =>{
                     type={'text'}
                     label="Address"
                     disabled
-                    className={classes.textInput + ' ' + classes.spaced}
+                    fullWidth
+                    className={classes.spaced}
                     variant="filled"
-                    defaultValue={userHash}
+                    defaultValue={userAddress}
                 />
                 
                 </div>
                 <div className={classes.container}>
-                    <TextField 
-                    disabled id="standard-disabled" 
+                <TextField 
+                    disabled id="clave-publica" 
                     label="Clave pública" 
                     variant="filled"
+                    fullWidth
                     defaultValue={userPublicKey} 
                     className={classes.spaced}
                     />
-                    <TextField 
-                    disabled id="standard-disabled" 
+                  </div>
+                  <div className={classes.container}>
+                <TextField 
+                    disabled id="clave-private" 
                     label="Clave privada" 
                     variant="filled"
+                    fullWidth
                     type={showPrivate?'text':'password'}
                     className={classes.spaced}
                     defaultValue={userPrivateKey} 
@@ -163,8 +168,7 @@ const Profile = (props) =>{
                       </InputAdornment>),
                       }}
                   />
-
-                </div>
+                  </div>
                 
                 
                 
