@@ -38,7 +38,10 @@ export default function RecipeCard(props) {
             {props.recipeText.substring(0,60)}
           </Typography>
           <Typography variant="body1" color="textPrimary" component="p">
-            {props.recipeText.substring(61,props.recipeText)}
+            {props.recipeText.substring(60, 120)}
+          </Typography>
+	<Typography variant="body1" color="textPrimary" component="p">
+            {props.recipeText.substring(120)}
           </Typography>
           </div>
           <Typography variant="body1" color={props.used?'error':'primary'} component="h6">
