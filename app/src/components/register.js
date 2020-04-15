@@ -56,7 +56,8 @@ const Register = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [matricula, setMatricula] = useState('');
-  const [obraSocial, setObraSocial] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [obrasSociales, setObraSociales] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -130,7 +131,7 @@ const Register = (props) => {
     <React.Fragment>
       <form className={classes.container} noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Regístrate en Recetas" />
+          <CardHeader className={classes.header} title="Regístrate en Pölh Recetas" />
           <CardContent>
             <div>
             <TextField
@@ -177,7 +178,35 @@ const Register = (props) => {
                 onChange={(e)=>setMatricula(e.target.value)}
                 onKeyPress={(e)=>handleKeyPress(e)}
               />)}
-              {userType && (
+              {
+                userType && (<TextField
+                  error={error}
+                  fullWidth
+                  id="direccion"
+                  type="text"
+                  label="Dirección"
+                  placeholder="Dirección"
+                  margin="normal"
+                  value={direccion}
+                  onChange={(e)=>setDireccion(e.target.value)}
+                  onKeyPress={(e)=>handleKeyPress(e)}
+                />)}
+              {
+                userType && (<TextField
+                  error={error}
+                  fullWidth
+                  id="obrasSociales"
+                  type="text"
+                  label="Obras sociales"
+                  placeholder="Obra social 1, obra social 2"
+                  helperText="Separadas por coma (,)"
+                  margin="normal"
+                  value={obrasSociales}
+                  onChange={(e)=>setObraSociales(e.target.value)}
+                  onKeyPress={(e)=>handleKeyPress(e)}
+                />)
+              }
+              {/*userType && (
                   <FormControl margin="normal" fullWidth color="secondary">
                 <InputLabel id="obra-social-label">Obra Social</InputLabel>
               <Select
@@ -190,7 +219,7 @@ const Register = (props) => {
                 >
                 <MenuItem value="Osde">OSDE</MenuItem>
                 <MenuItem value="Swiss medical">Swiss medical</MenuItem>
-            </Select></FormControl>)}
+              </Select></FormControl>)*/}
               <TextField
                 error={error}
                 fullWidth
@@ -231,7 +260,7 @@ const Register = (props) => {
       </form>
       <ButtonGroup className={classes.botones} size="large" color="secondary" aria-label="large outlined primary button group">
         <Button onClick={()=>{setUserType(false)}} variant={!userType?'contained':'outlined'}>Médico</Button>
-        <Button onClick={()=>{setUserType(true)}} variant={userType?'contained':'outlined'}>Paciente</Button>
+        <Button onClick={()=>{setUserType(true)}} variant={userType?'contained':'outlined'}>Farmacia</Button>
       </ButtonGroup>
     </React.Fragment>
   );

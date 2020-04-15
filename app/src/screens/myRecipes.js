@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) =>
 const MyRecipes = (props) =>{
     const dispatch = useDispatch();
     const recipesList = useSelector(state => state.recipe.recipes);
+    const userType = useSelector(state => state.user.userType);
     const classes = useStyles();
     useEffect(()=>{
         dispatch(fetchRecipes())
@@ -25,6 +26,9 @@ const MyRecipes = (props) =>{
     
     return (
         <React.Fragment>
+            {recipesList.length==0?(
+                <h2 id="emptyListText">{userType==="medico"?'Aquí aparecerán las recetas que has creado':'Aquí aparecerán las recetas que le han presentado a su farmacia'}</h2>
+            ):(
             <ul id="recipesList">
             {recipesList.map((item, index)=>{
                 return (
@@ -36,7 +40,7 @@ const MyRecipes = (props) =>{
                 </li>
                 )
             })}
-            </ul>
+            </ul>)}
             
         </React.Fragment>
 

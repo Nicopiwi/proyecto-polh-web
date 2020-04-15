@@ -17,7 +17,7 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { withRouter, Route, Switch } from 'react-router-dom'
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import MakeRecipe from './makeRecipe'
 import MyRecipes from './myRecipes'
 import Profile from './profile'
@@ -71,7 +71,8 @@ function DashboardScreen(props) {
     const { container } = props;
     const classes = useStyles();
     const theme = useTheme();
-    const userName = useSelector(state => `${state.user.userName} ${state.user.userSurname}`);
+    const userName = useSelector(state => state.user.type==="medico"?`${state.user.userName} ${state.user.userSurname}`:state.user.userNombreEstablecimiento);
+    const userType = useSelector(state => state.user.userType);
     const [mobileOpen, setMobileOpen] = React.useState(false);
   
     const handleDrawerToggle = () => {
@@ -98,12 +99,15 @@ function DashboardScreen(props) {
                 </ListItemIcon>
               <ListItemText primary={"Mis Recetas"} />
             </ListItem>
-            <ListItem button onClick={()=>{props.history.push('/dashboard/crearrecetas')}}>
+            {userType==='medico'&&(
+              <ListItem button onClick={()=>{props.history.push('/dashboard/crearrecetas')}}>
               <ListItemIcon>
                   <CrearIcon />
                 </ListItemIcon>
               <ListItemText primary={"Crear Receta"} />
-            </ListItem>
+              </ListItem>
+            )}
+            
             <Divider />
             <ListItem button onClick={()=>{props.history.push('/dashboard/cuenta')}}>
             <ListItemIcon>
@@ -137,7 +141,7 @@ function DashboardScreen(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-                Recetas | Usuario {userName} {}
+                Pölh Recetas | Usuario {userName} {}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -176,7 +180,7 @@ function DashboardScreen(props) {
             <Switch>
                 <Route exact path="/dashboard" component={MyRecipes} />
                 <Route exact path="/dashboard/misrecetas" component={MyRecipes} />
-                <Route exact path="/dashboard/crearrecetas" component={MakeRecipe} />
+                <Route exact path="/dashboard/crearrecetas" render={()=>(userType==='medico'?<MakeRecipe/>:<Redirect to="/dashboard"></Redirect>)} />
                 <Route exact path="/dashboard/cuenta" component={Profile} />
             </Switch>
         </main>

@@ -44,12 +44,15 @@ const Profile = (props) =>{
     
     const userName = useSelector(state => state.user.userName);
     const userSurname = useSelector(state => state.user.userSurname);
+    const userNombreEstablecimiento = useSelector(state => state.user.userNombreEstablecimiento);
     const userMatricula = useSelector(state => state.user.userMatricula);
     const userEmail = useSelector(state => state.user.userEmail);
     const userAddress = useSelector(state => state.user.userAddress);
     const userHash = useSelector(state => state.user.userHash);
     const userPublicKey = useSelector(state => state.user.userPublicKey);
     const userPrivateKey = useSelector(state => state.user.userPrivateKey);
+    const userDireccion = useSelector(state => state.user.userDireccion);
+    const userType = useSelector(state => state.user.userType);
     return (
         <Fragment>
             <Card fullWidth>
@@ -113,6 +116,32 @@ const Profile = (props) =>{
               />
               {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
                 </div>
+                {userType==="farmacia"&&(
+                <div className={classes.container}>
+                <TextField
+                    id="establecimiento"
+                    type={'text'}
+                    label="Establecimiento"
+                    disabled={!editMode}
+                    className={classes.textInput + ' ' + classes.spaced}
+                    variant="filled"
+                    defaultValue={userNombreEstablecimiento}
+                />
+                {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
+                </div>)}
+                {userType==="farmacia"&&(
+                <div className={classes.container}>
+                <TextField
+                    id="direccion"
+                    type={'text'}
+                    label="Direccion"
+                    disabled={!editMode}
+                    className={classes.textInput + ' ' + classes.spaced}
+                    variant="filled"
+                    defaultValue={userDireccion}
+                />
+                {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
+                </div>)}
                 <div className={classes.container}>
                 <TextField
                     id="matricula"
@@ -148,6 +177,7 @@ const Profile = (props) =>{
                     className={classes.spaced}
                     />
                   </div>
+                  
                   <div className={classes.container}>
                 <TextField 
                     disabled id="clave-private" 

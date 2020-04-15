@@ -5,7 +5,9 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import CardHeader from '@material-ui/core/CardHeader';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -32,6 +34,10 @@ const useStyles = makeStyles((theme) =>
       marginTop: theme.spacing(2),
       flexGrow: 1
     },
+    botones:{
+      marginTop: theme.spacing(1),
+      flexGrow: 1
+    },
     header: {
       textAlign: 'center',
       background: '#212121',
@@ -53,8 +59,10 @@ const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [userType, setUserType] = useState('medico');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [helperText, setHelperText] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -70,14 +78,12 @@ const Login = (props) => {
   const handleLogin = async () => {
         props.nullErrors("LOGIN")
         setError(false);
-        let loginRet = await props.login(username, password)
-        console.log(loginRet)
+        let loginRet = await props.login(username, password, userType)
         if(!loginRet) {
           setError(true);
           setHelperText('Nombre de usuario o contraseña incorrectos')
         }
         else{
-          console.log('aaaaa')
           props.history.push("/dashboard")
         }
   };
@@ -96,7 +102,7 @@ const Login = (props) => {
     <React.Fragment>
       <form className={classes.container} noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Inicia sesión en Recetas" />
+          <CardHeader className={classes.header} title="Inicia sesión en Pölh Recetas" />
           <CardContent>
             <div>
               <TextField
@@ -133,20 +139,29 @@ const Login = (props) => {
                   }}
               />
             </div>
+            
           </CardContent>
           <CardActions>
+          
             <Button
               variant="contained"
               size="large"
               color="secondary"
               className={classes.loginBtn}
               onClick={()=>handleLogin()}
-              disabled={isButtonDisabled}>
-              Login
+              disabled={isButtonDisabled}
+              >
+              {loading && <CircularProgress color="secondary" size={14} />}
+              {!loading && 'Login'}
             </Button>
           </CardActions>
         </Card>
+        
       </form>
+      <ButtonGroup className={classes.botones} size="large" color="secondary" aria-label="large outlined primary button group">
+            <Button onClick={()=>{setUserType('medico')}} variant={userType==='medico'?'contained':'outlined'}>Médico</Button>
+            <Button onClick={()=>{setUserType('farmacia')}} variant={userType==='farmacia'?'contained':'outlined'}>Farmacia</Button>
+          </ButtonGroup>
     </React.Fragment>
   );
 }

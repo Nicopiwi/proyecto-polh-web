@@ -1,0 +1,11 @@
+#textoModal{
+    border:none;
+    background-color:#fff;
+    resize:none;
+    width:500px;
+    height:250px;
+    padding:3rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: medium;
+}

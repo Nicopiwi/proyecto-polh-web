@@ -2,11 +2,14 @@ const initialState = {
     userName:'',
     userSurname:'',
     userMatricula:0,
+    userNombreEstablecimiento:'',
+    userDireccion:'',
     userAddress:'',
     userPublicKey:'',
     userPrivateKey:'',
     userHash:'',
     userEmail:'',
+    userType:'',
     loginError:null
 };
 
@@ -18,11 +21,14 @@ export default function(state = initialState, action) {
                 userName:action.payload.userName,
                 userSurname:action.payload.userSurname,
                 userMatricula:action.payload.userMatricula,
+                userNombreEstablecimiento:action.payload.userNombreEstablecimiento,
+                userDireccion:action.payload.userDireccion,
                 userAddress:action.payload.userAddress,
                 userPublicKey:action.payload.userPublicKey,
                 userPrivateKey:action.payload.userPrivateKey,
                 userEmail:action.payload.userEmail,
-                userHash:action.payload.userHash
+                userHash:action.payload.userHash,
+                userType:action.payload.userType,
             };
         case 'LOGIN_ERROR':
             return {

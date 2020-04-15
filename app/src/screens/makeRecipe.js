@@ -7,6 +7,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { createRecipe } from "../redux/actions/recipeActions";
 
+import './css/dashboard.css'
 import APIs from '../APIs'
 
 const useStyles = makeStyles((theme) =>
@@ -42,8 +43,10 @@ const MakeRecipes = (props) =>{
         headers.append('Accept', 'application/json');
         let created = await dispatch(createRecipe(medicParams, {address: address}, recipeText))
         if (created){
-            await setRecipeText('')
-            await setAddress('')
+            
+            setRecipeText('')
+            setAddress('')
+            alert('Receta creada con éxito')
         }
     }
     return (
@@ -60,10 +63,11 @@ const MakeRecipes = (props) =>{
                 maxLength={500}
                 variant="filled"
                 className={classes.spaced}
+                value={recipeText}
                 onChange={(e)=>setRecipeText(e.target.value)}
                 />
 
-                <TextField onChange={(e)=>setAddress(e.target.value)} className={classes.spaced} id="filled-basic" fullWidth label="Destinatario (Address)" variant="filled" />
+                <TextField value={address} onChange={(e)=>setAddress(e.target.value)} className={classes.spaced} id="filled-basic" fullWidth label="Destinatario (Address)" variant="filled" />
                 <Button onClick={()=>handleSubmit()} className={classes.spaced} variant="contained" color="secondary">Enviar</Button>
             </div>
             
