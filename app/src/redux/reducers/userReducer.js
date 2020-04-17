@@ -35,6 +35,17 @@ export default function(state = initialState, action) {
                 ...state,
                 loginError: action.payload
             };
+        case 'MODIFY_USERNAME':
+            return {
+                ...state,
+                userName: action.payload.nombre,
+                userSurname: action.payload.apellido
+            }
+        case 'MODIFY_EMAIL':
+            return {
+                ...state,
+                userEmail: action.payload,
+            }
         case 'NULL_ERRORS':
             switch(action.payload){
                 case "LOGIN":

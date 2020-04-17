@@ -61,10 +61,10 @@ export const nullErrors = (errorName) => dispatch => {
   })
 };
   
-export const modifyUserName = (userName) => dispatch => {
+export const modifyUserName = (userName, userSurname) => dispatch => {
     dispatch({
       type: 'MODIFY_USERNAME',
-      payload: userName
+      payload: {nombre: userName, apellido: userSurname}
     })
 };
 
@@ -89,9 +89,16 @@ export const modifyEmail = (userEmail) => dispatch => {
   })
 };
 
-export const modifyKeys = (userKeys) => dispatch => {
+export const modifyDireccion = (userDireccion) => dispatch => {
   dispatch({
-    type: 'MODIFY_KEYS',
-    payload: userKeys
+    type: 'MODIFY_DIRECCION',
+    payload: userDireccion
+  })
+};
+
+export const modifyNombreEstablecimiento = (userNombreEstablecimiento) => dispatch => {
+  dispatch({
+    type: 'MODIFY_NOMBRE_ESTABLECIMIENTO',
+    payload: userNombreEstablecimiento
   })
 };

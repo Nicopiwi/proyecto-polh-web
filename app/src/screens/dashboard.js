@@ -71,7 +71,7 @@ function DashboardScreen(props) {
     const { container } = props;
     const classes = useStyles();
     const theme = useTheme();
-    const userName = useSelector(state => state.user.type==="medico"?`${state.user.userName} ${state.user.userSurname}`:state.user.userNombreEstablecimiento);
+    const userName = useSelector(state => state.user.userType==="medico"?`${state.user.userName} ${state.user.userSurname}`:state.user.userNombreEstablecimiento);
     const userType = useSelector(state => state.user.userType);
     const [mobileOpen, setMobileOpen] = React.useState(false);
   
@@ -80,6 +80,7 @@ function DashboardScreen(props) {
     };
 
     const logOut=()=>{
+        console.log(userType)
         localStorage.removeItem('userToken')
         props.history.push('/')
     }

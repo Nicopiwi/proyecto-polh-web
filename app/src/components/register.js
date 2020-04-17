@@ -56,6 +56,7 @@ const Register = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [matricula, setMatricula] = useState('');
+  const [nombreEstablecimiento, setNombreEstablecimiento] = useState('');
   const [direccion, setDireccion] = useState('');
   const [obrasSociales, setObraSociales] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -67,7 +68,8 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    if (username.trim() && password.trim() && firstName.trim() && lastName.trim() && matricula.trim()) {
+    if (username.trim() && password.trim() && firstName.trim() && lastName.trim() && 
+    matricula.trim()&&(userType&&nombreEstablecimiento.trim()&&direccion.trim())) {
       setIsButtonDisabled(false);
 
     } else {
@@ -75,7 +77,7 @@ const Register = (props) => {
         setHelperText("")
         setIsButtonDisabled(true);
     }
-  }, [username, password, firstName, lastName, matricula]);
+  }, [username, password, firstName, lastName, matricula, nombreEstablecimiento, direccion]);
 
   const handleRegister = async () => {
       localStorage.clear()
@@ -84,18 +86,25 @@ const Register = (props) => {
           setError(false);
           setIsButtonDisabled(true)
           setLoading(true)
+          let api_url = userType?APIs.rest.registerFarmacia:APIs.rest.registerMedico
+          let reqBody = {
+            email:username,
+            password:password, 
+            name:firstName, 
+            surname: lastName, 
+            matricula:parseInt(matricula),
+            nombreEstablecimiento:userType?nombreEstablecimiento:null,
+            direccion:userType?direccion:null,
+            obrasSociales:userType?obrasSociales.split(','):null
+          }
           try{
-            await fetch(APIs.rest.registerMedico,{
+            await fetch(api_url,{
               method:'POST',
               headers:{
                 'Content-Type': 'application/json',
               },
-              body:JSON.stringify({email:username,
-               password:password, 
-               name:firstName, 
-               surname: lastName, 
-               matricula:parseInt(matricula)})})
-            
+              body:JSON.stringify(reqBody)
+            })
               props.history.push('/dashboard')
           }
           catch(e){
@@ -156,6 +165,18 @@ const Register = (props) => {
                 onChange={(e)=>setLastName(e.target.value)}
                 onKeyPress={(e)=>handleKeyPress(e)}
               />
+              {userType && <TextField
+                error={error}
+                fullWidth
+                id="nombreEstablecimiento"
+                type="text"
+                label="Nombre del establecimiento"
+                placeholder="Nombre del establecimiento"
+                margin="normal"
+                onChange={(e)=>setNombreEstablecimiento(e.target.value)}
+                onKeyPress={(e)=>handleKeyPress(e)}
+              />}
+              
               <TextField
                 error={error}
                 fullWidth
@@ -167,7 +188,7 @@ const Register = (props) => {
                 onChange={(e)=>setUsername(e.target.value)}
                 onKeyPress={(e)=>handleKeyPress(e)}
               />
-              {!userType && (<TextField
+              <TextField
                 error={error}
                 fullWidth
                 id="matricula"
@@ -177,7 +198,7 @@ const Register = (props) => {
                 margin="normal"
                 onChange={(e)=>setMatricula(e.target.value)}
                 onKeyPress={(e)=>handleKeyPress(e)}
-              />)}
+              />
               {
                 userType && (<TextField
                   error={error}

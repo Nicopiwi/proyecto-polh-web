@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+
 import './css/modal.css'
 import APIs from '../APIs';
+
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -54,12 +58,13 @@ export default function RecipeCard(props) {
     const [recetaTexto, setRecetaTexto] = useState('');
 
 
-    const handleOpen= async ()=>{
+    const handleOpen = async ()=>{
       setOpenModal(true)
       let headers = new Headers();
       headers.append('token', localStorage.getItem('userToken'));
       let text = await fetch(APIs.rest.transformHashToText + props.recipeText, {method:'GET', headers})
-      setRecetaTexto(text.message)
+      console.log(text)
+      //setRecetaTexto(text.message)
       
     }
     const handleClose = () => {
