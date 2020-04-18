@@ -1,8 +1,11 @@
-export const COLORS = {
-    lightWhite: "#FBFDFF",
-    lightGray: "#F3F5F6",
-    mediumGray: "#C5CCD6",
-    gray: "#9DA3B4",
-    babyVerde: "#2BDA8E",
-    verde: "#0AC4BA",
-  }
+const COLORS = {
+  accent: "#F3534A",
+  primary: "#0AC4BA",
+  secondary: "#2BDA8E",
+  tertiary: "#FFE358",
+  black: "#323643",
+  white: "#FFFFFF",
+  gray: "#9DA3B4",
+  gray2: "#C5CCD6",
+}
+export default COLORS
