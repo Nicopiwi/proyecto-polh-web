@@ -26,7 +26,7 @@ const MyRecipes = (props) =>{
     
     return (
         <React.Fragment>
-            {recipesList.length==0?(
+            {(!recipesList || recipesList.length==0)?(
                 <h2 id="emptyListText">{userType==="medico"?'Aquí aparecerán las recetas que has creado':'Aquí aparecerán las recetas que le han presentado a su farmacia'}</h2>
             ):(
             <ul id="recipesList">

@@ -1,4 +1,5 @@
 import APIs from '../../APIs'
+import fecthTimeout from '../../fetchWithTimeout'
 
 export const login = (email, password, type) => dispatch => {
     let api_url = ''
@@ -15,7 +16,7 @@ export const login = (email, password, type) => dispatch => {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
-    console.log(JSON.stringify({emaill:email, passwordd:password}))
+    //console.log(JSON.stringify({emaill:email, passwordd:password}))
     return fetch(api_url, {method: 'POST',
       body: JSON.stringify({emaill:email, passwordd:password}),
       headers:headers
@@ -61,10 +62,30 @@ export const nullErrors = (errorName) => dispatch => {
   })
 };
   
-export const modifyUserName = (userName, userSurname) => dispatch => {
-    dispatch({
-      type: 'MODIFY_USERNAME',
-      payload: {nombre: userName, apellido: userSurname}
+export const modifyUserName = (userName, userSurname, userType) => dispatch => {
+  const uri = userType==='medico'?APIs.rest.updateMedico:APIs.rest.updateFarmacia
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Accept', 'application/json');
+  headers.append('Access-Control-Allow-Origin', '*');
+  
+  headers.append('token', localStorage.getItem('userToken'));
+  console.log('modificando...')
+  console.log(`${userName} ${userSurname} ${userType}`)
+  
+  fecthTimeout(uri, 
+    {method:'PUT', 
+    headers, 
+    body: JSON.stringify({name: userName, surname: userSurname})}, 30000)
+    .then(res=>{
+      console.log(res)
+      dispatch({
+        type: 'MODIFY_USERNAME',
+        payload: {nombre: userName, apellido: userSurname}
+      })
+    })
+    .catch(e=>{
+      console.log(e)
     })
 };
 

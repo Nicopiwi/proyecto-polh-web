@@ -10,6 +10,8 @@ const APIs = {
     registerFarmacia: `${BASE_URL}/farmacia/register`,
     createReceta: `${BASE_URL}/receta/issue`,
     getRecetasMedico: `${BASE_URL}/receta/get-medic`,
+    updateMedico: `${BASE_URL}/medico/update`,
+    updateFarmacia: `${BASE_URL}/farmacia/update`,
     transformHashToText: `${BASE_URL}/receta/read-recipe/`,
   },
   test: "https://randomuser.me/api/?results=1",

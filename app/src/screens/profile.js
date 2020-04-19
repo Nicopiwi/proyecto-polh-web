@@ -95,7 +95,7 @@ const Profile = (props) =>{
                     defaultValue={userSurname}
                     value={newUserSurname}
                     onChange={(e)=>setNewUserSurname(e.target.value)} />
-                    {editMode && <Button onClick={()=>dispatch(modifyUserName(newUserName, newUserSurname))} variant="contained" color="secondary">Guardar</Button>}
+                    {editMode && <Button onClick={()=>dispatch(modifyUserName(newUserName, newUserSurname, userType))} variant="contained" color="secondary">Guardar</Button>}
 
                 </div>
                 <div className={classes.container}>

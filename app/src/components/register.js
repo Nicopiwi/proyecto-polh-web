@@ -108,6 +108,7 @@ const Register = (props) => {
               props.history.push('/dashboard')
           }
           catch(e){
+            console.log('error')
             setLoading(false)
             setIsButtonDisabled(false)
             console.log(e)

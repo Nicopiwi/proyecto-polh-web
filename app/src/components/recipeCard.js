@@ -63,8 +63,9 @@ export default function RecipeCard(props) {
       let headers = new Headers();
       headers.append('token', localStorage.getItem('userToken'));
       let text = await fetch(APIs.rest.transformHashToText + props.recipeText, {method:'GET', headers})
-      console.log(text)
-      //setRecetaTexto(text.message)
+      let textJson = await text.json()
+      console.log(textJson)
+      setRecetaTexto(textJson.result.message)
       
     }
     const handleClose = () => {
@@ -83,6 +84,9 @@ export default function RecipeCard(props) {
                 <Typography variant="body1" color="textPrimary" component="p">
             Receta
           </Typography>
+          <div>
+            <img alt="receta" src={require('../assets/medical-prescription.png')}/>
+          </div>
           {/*props.recipeText && (<><Typography variant="body1" color="textPrimary" component="p">
             {props.recipeText.substring(0,60)}
           </Typography>

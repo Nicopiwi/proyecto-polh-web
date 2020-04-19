@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+  marginText:{
+    marginRight:'20px'
+  },
   title:{
     left: '50%',
     alignSelf:'center'
@@ -141,8 +144,14 @@ function DashboardScreen(props) {
             >
               <MenuIcon />
             </IconButton>
+            <span class={classes.marginText}>
+                  <img src={require('../assets/logo.png')} height="42" width="42"/>
+              </span>
+
             <Typography variant="h6" noWrap>
-                Pölh Recetas | Usuario {userName} {}
+             
+                  Recetas | Usuario {userName}
+        
             </Typography>
           </Toolbar>
         </AppBar>
