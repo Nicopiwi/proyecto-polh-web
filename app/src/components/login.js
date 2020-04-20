@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) =>
     },
     card: {
       marginTop: theme.spacing(7)
+    },
+    cardHeaderTitle: {
+      fontSize: '1.2rem'
     }
 
   }),
@@ -102,7 +105,7 @@ const Login = (props) => {
     <React.Fragment>
       <form className={classes.container} noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Inicia sesión en Pölh Recetas" />
+          <CardHeader classes={{title:classes.cardHeaderTitle}} avatar={<img height="30" width="30" src={require('../assets/logo.png')}></img>} className={classes.header} title="Inicia sesión en Pölh Recetas" />
           <CardContent>
             <div>
               <TextField
@@ -152,7 +155,7 @@ const Login = (props) => {
               disabled={isButtonDisabled}
               >
               {loading && <CircularProgress color="secondary" size={14} />}
-              {!loading && 'Login'}
+              {!loading && 'Iniciar sesión'}
             </Button>
           </CardActions>
         </Card>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme) =>
     },
     card: {
       marginTop: theme.spacing(7)
+    },
+    cardHeaderTitle: {
+      fontSize: '1.2rem'
     }
-
-
   }),
 );
 
@@ -141,7 +142,7 @@ const Register = (props) => {
     <React.Fragment>
       <form className={classes.container} noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Regístrate en Pölh Recetas" />
+          <CardHeader classes={{title:classes.cardHeaderTitle}} avatar={<img height="30" width="30" src={require('../assets/logo.png')}></img>} className={classes.header} title="Regístrate en Pölh Recetas" />
           <CardContent>
             <div>
             <TextField
