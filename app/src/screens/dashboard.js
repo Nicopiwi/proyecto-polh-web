@@ -149,9 +149,7 @@ function DashboardScreen(props) {
               </span>
 
             <Typography variant="h6" noWrap>
-             
                   Recetas | Usuario {userName}
-        
             </Typography>
           </Toolbar>
         </AppBar>

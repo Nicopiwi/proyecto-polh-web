@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) =>
 
 const MyRecipes = (props) =>{
     const dispatch = useDispatch();
-    const recipesList = useSelector(state => state.recipe.recipes);
+    const recipesList = useSelector(state => state.recipe.recipes.reverse());
     const userType = useSelector(state => state.user.userType);
     const classes = useStyles();
     useEffect(()=>{
@@ -30,9 +30,9 @@ const MyRecipes = (props) =>{
                 <h2 id="emptyListText">{userType==="medico"?'Aquí aparecerán las recetas que has creado':'Aquí aparecerán las recetas que le han presentado a su farmacia'}</h2>
             ):(
             <ul id="recipesList">
-            {recipesList.map((item, index)=>{
+            {recipesList.map((item)=>{
                 return (
-                <li className={classes.spaced} key={index}>
+                <li className={classes.spaced} key={item._id}>
                     <RecipeCard recipeText={item.recipe_hash}
                     address={item.pacienteAddress}
                     used={item.is_used}
