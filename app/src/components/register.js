@@ -69,8 +69,12 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    if (username.trim() && password.trim() && firstName.trim() && lastName.trim() && 
-    matricula.trim()&&(userType&&nombreEstablecimiento.trim()&&direccion.trim())) {
+    let conditionA=(username !== '' && password !== '' && firstName !== '' && lastName !== '' && 
+    matricula !== '')
+
+    let conditionB = ((userType&&nombreEstablecimiento!== ''&&direccion!== '')|(!userType))
+
+    if (conditionA && conditionB) {
       setIsButtonDisabled(false);
 
     } else {
@@ -78,7 +82,7 @@ const Register = (props) => {
         setHelperText("")
         setIsButtonDisabled(true);
     }
-  }, [username, password, firstName, lastName, matricula, nombreEstablecimiento, direccion]);
+  }, [username, password, firstName, lastName, matricula, nombreEstablecimiento, direccion, userType]);
 
   const handleRegister = async () => {
       localStorage.clear()
@@ -113,6 +117,8 @@ const Register = (props) => {
             console.log('error')
             setLoading(false)
             setIsButtonDisabled(false)
+            setError(true)
+            setHelperText('Error en el registro. Pruebe más tarde')
             console.log(e)
           }
          

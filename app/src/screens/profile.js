@@ -66,7 +66,7 @@ const Profile = (props) =>{
         <Fragment>
             <Card fullWidth>
             <CardHeader 
-            title="Editar datos de la cuenta"
+            title="Datos de la cuenta"
             action={
                 <IconButton aria-label="edit" onClick={()=>setEditMode(!editMode)}>
                     <CreateIcon />

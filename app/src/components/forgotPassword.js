@@ -17,7 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { login, nullErrors } from '../redux/actions/userActions';
+import { forgotPassword, nullErrors } from '../redux/actions/userActions';
 
 //https://medium.com/@kkomaz/react-to-async-await-553c43f243e2
 
@@ -57,9 +57,6 @@ const useStyles = makeStyles((theme) =>
 const ForgotPassword = (props) => {
   const classes = useStyles();
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordCopy, setPasswordCopy] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState('medico');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [helperText, setHelperText] = useState('');
@@ -68,38 +65,36 @@ const ForgotPassword = (props) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (username.trim() && password.trim()) {
+    if (username.trim()) {
       setIsButtonDisabled(false);
     } else {
       setIsButtonDisabled(true);
     }
-  }, [username, password]);
+  }, [username]);
 
   
 
   const handleResetPassword = async () => {
         props.nullErrors("LOGIN")
         setError(false);
+        setLoading(true)
         //let loginRet = await props.login(username, password, userType)
-        if (password === passwordCopy){
-            setLoading(true)
-            let reqDone = true
-            if(!reqDone) {
-                setError(true);
-                setHelperText('Cuenta no encontrada')
-            }
-            else{
-                console.log(sent)
-                setSent(true)
-            }
+        let forgotRet = await props.forgotPassword(username, userType)
+        if (forgotRet){
+          setSent(true)
+        }
+        else{
+          setError(true)
+          setHelperText('Cuenta no encontrada')
         }
         
   };
 
+  /*
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  */
   const handleKeyPress = (e) => {
     if (e.keyCode === 13 || e.which === 13) {
       isButtonDisabled || handleResetPassword();
@@ -115,65 +110,21 @@ const ForgotPassword = (props) => {
               {
                   sent?(
                     <div>
-                        <h4>Se ha cambiado la contraseña</h4>
+                        <h4>Se ha enviado un mail a {username} para cambiar la contraseña</h4>
                     </div>
                   ):(
-                    <div>
                     <TextField
-                      error={error}
                       fullWidth
                       id="username"
                       type="email"
                       label="Email"
                       placeholder="Email"
                       margin="normal"
+                      error={error}
+                      helperText={helperText}
                       onChange={(e)=>setUsername(e.target.value)}
                       onKeyPress={(e)=>handleKeyPress(e)}
                     />
-                    <TextField
-                      fullWidth
-                      id="password"
-                      type={showPassword?'text':'password'}
-                      label="Nueva contraseña"
-                      placeholder="Ingrese su nueva contraseña"
-                      margin="normal"
-                      onChange={(e)=>setPassword(e.target.value)}
-                      onKeyPress={(e)=>handleKeyPress(e)}
-                      InputProps={{
-                          endAdornment: (<InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>),
-                        }}
-                    />
-                    <TextField
-                      error={error}
-                      fullWidth
-                      id="password"
-                      type={showPassword?'text':'password'}
-                      label="Repita su nueva contraseña"
-                      placeholder="Repita su nueva contraseña"
-                      margin="normal"
-                      helperText={helperText}
-                      onChange={(e)=>setPasswordCopy(e.target.value)}
-                      value={passwordCopy}
-                      onKeyPress={(e)=>handleKeyPress(e)}
-                      InputProps={{
-                          endAdornment: (<InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>),
-                        }}
-                    />
-                  </div>
                   )
               }
             
@@ -216,4 +167,4 @@ const ForgotPassword = (props) => {
 }
 
 
-export default connect(null, { login, nullErrors })(withRouter(ForgotPassword));
+export default connect(null, { forgotPassword, nullErrors })(withRouter(ForgotPassword));

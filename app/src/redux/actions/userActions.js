@@ -55,6 +55,46 @@ export const login = (email, password, type) => dispatch => {
     })
   };
 
+  export const forgotPassword = (email, type) => dispatch => {
+    let api_url = ''
+    switch(type){
+      case 'medico':
+        api_url = APIs.rest.forgotPasswordMedico
+        break;
+      case 'farmacia':
+        api_url = APIs.rest.forgotPasswordFarmacia
+        break;
+      default:
+        api_url = APIs.rest.forgotPasswordMedico
+    }
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    console.log(type)
+    //console.log(JSON.stringify({emaill:email, passwordd:password}))
+    return fetch(api_url, {method: 'POST',
+      body: JSON.stringify({email}),
+      headers:headers
+    })
+      .then(res => res.json())
+      .then(res => {
+          console.log(res)
+          if (res.status && res.status === 400){
+            return false
+          }
+          return true
+        }
+      )
+      .catch((e)=>{
+        console.log(e)
+        dispatch({
+          type: 'LOGIN_ERROR',
+          payload: e
+        })
+        return false
+    })
+  };
+
 export const nullErrors = (errorName) => dispatch => {
   dispatch({
     type: 'NULL_ERRORS',
