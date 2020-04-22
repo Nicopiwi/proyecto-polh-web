@@ -16,6 +16,7 @@ const APIs = {
     updateMedico: `${BASE_URL}/medico/update`,
     updateFarmacia: `${BASE_URL}/farmacia/update`,
     transformHashToText: `${BASE_URL}/receta/read-recipe/`,
+    transformHashToTextFarmacia: `${BASE_URL}/receta/read-recipe-pharmacy/`,
   },
   test: "https://randomuser.me/api/?results=1",
 };
