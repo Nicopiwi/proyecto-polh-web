@@ -12,7 +12,7 @@ const APIs = {
     forgotPasswordFarmacia: `${BASE_URL}/farmacia/forgot`,
     createReceta: `${BASE_URL}/receta/issue`,
     getRecetasMedico: `${BASE_URL}/receta/get-medic`,
-    getRecetasFarmacia: `${BASE_URL}/receta/get-farmacia`,
+    getRecetasFarmacia: `${BASE_URL}/receta/get-by-pharmacy`,
     updateMedico: `${BASE_URL}/medico/update`,
     updateFarmacia: `${BASE_URL}/farmacia/update`,
     transformHashToText: `${BASE_URL}/receta/read-recipe/`,
