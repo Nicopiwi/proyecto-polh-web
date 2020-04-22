@@ -23,7 +23,8 @@
     "redux-persist": "^6.0.0",
     "redux-persist-transform-encrypt": "^2.0.1",
     "redux-thunk": "^2.3.0",
-    "remotedev-serialize": "^0.1.8"
+    "remotedev-serialize": "^0.1.8",
+    "tiempo": "^1.1.5"
   },
   "scripts": {
     "start": "react-scripts start",

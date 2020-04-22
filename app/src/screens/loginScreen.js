@@ -41,7 +41,12 @@ class LoginScreen extends Component {
         }
         else if (this.state.loginState==2){
             return(
-                <ForgotPassword {...this.props} goToLogin={()=>this.goToLogin()}/>
+                <Fragment>
+                    <ForgotPassword {...this.props} goToLogin={()=>this.goToLogin()}/>
+                    <div className="spaced">
+                                <span><Link color="textSecondary" onClick={()=>this.setState({loginState:0})}>Cancelar</Link></span>
+                    </div>
+                </Fragment>
             )
         }
     }

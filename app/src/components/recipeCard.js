@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -7,10 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
+import tiempo from 'tiempo';
 
 import './css/modal.css'
-import APIs from '../APIs';
 
 
 function rand() {
@@ -27,6 +26,7 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
   };
 }
+
 
 
 const useStyles = makeStyles((theme)=>createStyles({
@@ -54,24 +54,11 @@ export default function RecipeCard(props) {
         return {first:text.substring(0,60), second:text.substring(61, 120)};
     }
     const [modalStyle] = useState(getModalStyle);
-    const [openModal, setOpenModal] = useState(false);
-    const [recetaTexto, setRecetaTexto] = useState('');
-
-
-    const handleOpen = async ()=>{
-      setOpenModal(true)
-      let headers = new Headers();
-      headers.append('token', localStorage.getItem('userToken'));
-      let text = await fetch(APIs.rest.transformHashToText + props.recipeText, {method:'GET', headers})
-      let textJson = await text.json()
-      console.log(textJson)
-      setRecetaTexto(textJson.result.message)
-      
-    }
-    const handleClose = () => {
-      setOpenModal(false);
-    };
-    
+    const [tiempoHace, setTiempoHace] = useState('')
+    useEffect(()=>{
+      tiempo.config({ locale: 'es' });
+      setTiempoHace(tiempo.format(props.date, new Date()));
+    }, [])
     const classes = useStyles();
 
   return (
@@ -81,7 +68,7 @@ export default function RecipeCard(props) {
             <div className={classes.container}>
                 <div>
       
-                <Typography variant="body1" color="textPrimary" component="p">
+                <Typography variant="h5" color="textPrimary" component="p">
             Receta
           </Typography>
           <div>
@@ -96,7 +83,7 @@ export default function RecipeCard(props) {
 	<Typography variant="body1" color="textPrimary" component="p">
             {props.recipeText.substring(120)}
           </Typography></>)*/}
-          <Button onClick={()=>handleOpen()} size="small" color="primary">
+          <Button onClick={()=>props.handleOpen(props.recipeText)} size="small" color="primary">
           Ver
         </Button>
           </div>
@@ -108,6 +95,9 @@ export default function RecipeCard(props) {
           <Typography variant="body2" color="textSecondary" component="p">
             Address del paciente: {props.address}
           </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Creada hace {tiempoHace}
+          </Typography>
           </div>
           </div>
         </CardContent>
@@ -115,14 +105,7 @@ export default function RecipeCard(props) {
         
       </CardActions>
     </Card>
-    <Modal
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby="receta-texto"
-      >
-        <textarea value={recetaTexto?recetaTexto:"Texto"} disabled id="textoModal">
-        </textarea>
-      </Modal>
+    
     </React.Fragment>
   );
 }

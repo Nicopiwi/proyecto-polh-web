@@ -25,6 +25,7 @@ const persistConfig = {
   transforms: [encryptor],
   key: 'root',
   storage: storage,
+  blackList:['recipe'],
   stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.
  };
 

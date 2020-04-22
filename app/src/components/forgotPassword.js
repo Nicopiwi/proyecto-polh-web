@@ -110,7 +110,7 @@ const ForgotPassword = (props) => {
     <React.Fragment>
       <form className={classes.container} noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader classes={{title:classes.cardHeaderTitle}} avatar={<img height="30" width="30" src={require('../assets/logo.png')}></img>} className={classes.header} title="Recupere su contraseña" />
+          <CardHeader classes={{title:classes.cardHeaderTitle}} avatar={<img alt="logo" height="30" width="30" src={require('../assets/logo.png')}></img>} className={classes.header} title="Recupere su contraseña" />
           <CardContent>
               {
                   sent?(
@@ -207,6 +207,10 @@ const ForgotPassword = (props) => {
         </Card>
         
       </form>
+      <ButtonGroup className={classes.botones} size="large" color="secondary" aria-label="large outlined primary button group">
+            <Button onClick={()=>{setUserType('medico')}} variant={userType==='medico'?'contained':'outlined'}>Médico</Button>
+            <Button onClick={()=>{setUserType('farmacia')}} variant={userType==='farmacia'?'contained':'outlined'}>Farmacia</Button>
+          </ButtonGroup>
     </React.Fragment>
   );
 }

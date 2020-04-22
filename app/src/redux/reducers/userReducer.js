@@ -46,6 +46,21 @@ export default function(state = initialState, action) {
                 ...state,
                 userEmail: action.payload,
             }
+        case 'MODIFY_MATRICULA':
+            return {
+                ...state,
+                userMatricula: action.payload,
+            }
+        case 'MODIFY_DIRECCION':
+            return {
+                ...state,
+                userDireccion: action.payload,
+            }
+        case 'MODIFY_NOMBRE_ESTABLECIMIENTO':
+            return {
+                ...state,
+                userNombreEstablecimiento: action.payload,
+            }
         case 'NULL_ERRORS':
             switch(action.payload){
                 case "LOGIN":

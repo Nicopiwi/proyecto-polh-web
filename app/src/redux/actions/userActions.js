@@ -1,5 +1,5 @@
 import APIs from '../../APIs'
-import fecthTimeout from '../../fetchWithTimeout'
+import fetchTimeout from '../../fetchWithTimeout'
 
 export const login = (email, password, type) => dispatch => {
     let api_url = ''
@@ -68,58 +68,157 @@ export const modifyUserName = (userName, userSurname, userType) => dispatch => {
   headers.append('Content-Type', 'application/json');
   headers.append('Accept', 'application/json');
   headers.append('Access-Control-Allow-Origin', '*');
-  
   headers.append('token', localStorage.getItem('userToken'));
+  console.log(localStorage.getItem('userToken'))
   console.log('modificando...')
   console.log(`${userName} ${userSurname} ${userType}`)
   
-  fecthTimeout(uri, 
+  return fetchTimeout(uri, 
     {method:'PUT', 
     headers, 
     body: JSON.stringify({name: userName, surname: userSurname})}, 30000)
+    .then(res=>res.json())
     .then(res=>{
-      console.log(res)
+      if (res.status && res.status === 400){
+        return false
+      }
       dispatch({
         type: 'MODIFY_USERNAME',
         payload: {nombre: userName, apellido: userSurname}
       })
+      alert('Dato cambiado')
+      return true
     })
     .catch(e=>{
       console.log(e)
+      return false
     })
 };
 
-export const modifyPassword = (userPassword) => dispatch => {
-  dispatch({
-    type: 'MODIFY_PASSWORD',
-    payload: userPassword
-  })
-};
 
 export const modifyMatricula = (userMatricula) => dispatch => {
-  dispatch({
-    type: 'MODIFY_MATRICULA',
-    payload: userMatricula
-  })
+  const uri = APIs.rest.updateFarmacia
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Accept', 'application/json');
+  headers.append('Access-Control-Allow-Origin', '*');
+  headers.append('token', localStorage.getItem('userToken'));
+  console.log('modificando...')
+  
+  return fetchTimeout(uri, 
+    {method:'PUT', 
+    headers, 
+    body: JSON.stringify({matricula:userMatricula})}, 30000)
+    .then(res=>res.json())
+    .then(res=>{
+      if (res.status && res.status === 400){
+        return false
+      }
+      dispatch({
+        type: 'MODIFY_MATRICULA',
+        payload: userMatricula
+      })
+      alert('Dato cambiado')
+      return true
+    })
+    .catch(e=>{
+      console.log(e)
+      return false
+    })
 };
 
-export const modifyEmail = (userEmail) => dispatch => {
-  dispatch({
-    type: 'MODIFY_EMAIL',
-    payload: userEmail
-  })
+export const modifyEmail = (userEmail, userType) => dispatch => {
+  const uri = userType==='medico'?APIs.rest.updateMedico:APIs.rest.updateFarmacia
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Accept', 'application/json');
+  headers.append('Access-Control-Allow-Origin', '*');
+  headers.append('token', localStorage.getItem('userToken'));
+  console.log('modificando...')
+  
+  return fetchTimeout(uri, 
+    {method:'PUT', 
+    headers, 
+    body: JSON.stringify({email:userEmail})}, 30000)
+    .then(res=>res.json())
+    .then(res=>{
+      if (res.status && res.status === 400){
+        return false
+      }
+      dispatch({
+        type: 'MODIFY_EMAIL',
+        payload: userEmail
+      })
+      return true
+    })
+    .catch(e=>{
+      console.log(e)
+      return false
+    })
 };
 
 export const modifyDireccion = (userDireccion) => dispatch => {
-  dispatch({
-    type: 'MODIFY_DIRECCION',
-    payload: userDireccion
-  })
+  const uri = APIs.rest.updateFarmacia
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Accept', 'application/json');
+  headers.append('Access-Control-Allow-Origin', '*');
+  headers.append('token', localStorage.getItem('userToken'));
+  console.log('modificando...')
+  
+  return fetchTimeout(uri, 
+    {method:'PUT', 
+    headers, 
+    body: JSON.stringify({direccion:userDireccion})}, 30000)
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res)
+      if (res.status && res.status === 400){
+        return false
+      }
+      else{
+        dispatch({
+          type: 'MODIFY_DIRECCION',
+          payload: userDireccion
+        })
+        alert('Dato cambiado')
+        return true
+      }
+    })
+    .catch(e=>{
+      console.log(e)
+      return false
+    })
 };
 
 export const modifyNombreEstablecimiento = (userNombreEstablecimiento) => dispatch => {
-  dispatch({
-    type: 'MODIFY_NOMBRE_ESTABLECIMIENTO',
-    payload: userNombreEstablecimiento
-  })
+  const uri = APIs.rest.updateFarmacia
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Accept', 'application/json');
+  headers.append('Access-Control-Allow-Origin', '*');
+  headers.append('token', localStorage.getItem('userToken'));
+  console.log('modificando...')
+  
+  return fetchTimeout(uri, 
+    {method:'PUT', 
+    headers, 
+    body: JSON.stringify({nombreEstablecimiento:userNombreEstablecimiento})}, 7000)
+    .then(res=>res.json())
+    .then(res=>{
+      if (res.status && res.status === 400){
+        console.log('falló')
+        return false
+      }
+      dispatch({
+        type: 'MODIFY_NOMBRE_ESTABLECIMIENTO',
+        payload: userNombreEstablecimiento
+      })
+      alert('Dato cambiado')
+      return true
+    })
+    .catch(e=>{
+      console.log(e)
+      return false
+    })
 };

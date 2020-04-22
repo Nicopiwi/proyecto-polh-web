@@ -10280,6 +10280,11 @@ thunky@^1.0.2:
   resolved "https://registry.yarnpkg.com/thunky/-/thunky-1.1.0.tgz#5abaf714a9405db0504732bbccd2cedd9ef9537d"
   integrity sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==
 
+tiempo@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/tiempo/-/tiempo-1.1.5.tgz#9616eb5070076e57917a7c6dccff5854ad47ae8d"
+  integrity sha512-CRzxc8+UhOEsB+2EedbzqGKfZlgQ94FGn44ROyA/vJ0GsAv9ubA+KCLcvz/zhmDkyTSTkHEew37z00mBO/Bg/g==
+
 timers-browserify@^2.0.4:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.11.tgz#800b1f3eee272e5bc53ee465a04d0e804c31211f"

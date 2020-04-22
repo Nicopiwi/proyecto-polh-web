@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createRecipe } from "../redux/actions/recipeActions";
 
 import './css/dashboard.css'
-import APIs from '../APIs'
+//import APIs from '../APIs'
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -27,6 +27,7 @@ const MakeRecipes = (props) =>{
     const classes = useStyles();
     const [recipeText, setRecipeText] = useState('');
     const [address, setAddress] = useState('');
+    const [error, setError] = useState('');
     const dispatch = useDispatch();
     const medicParams = useSelector(state => {
         return {
@@ -43,10 +44,13 @@ const MakeRecipes = (props) =>{
         headers.append('Accept', 'application/json');
         let created = await dispatch(createRecipe(medicParams, {address: address}, recipeText))
         if (created){
-            
+            setError('')
             setRecipeText('')
             setAddress('')
             alert('Receta creada con éxito')
+        }
+        else{
+            setError('Address inválida')
         }
     }
     return (
@@ -67,7 +71,14 @@ const MakeRecipes = (props) =>{
                 onChange={(e)=>setRecipeText(e.target.value)}
                 />
 
-                <TextField value={address} onChange={(e)=>setAddress(e.target.value)} className={classes.spaced} id="filled-basic" fullWidth label="Destinatario (Address)" variant="filled" />
+                <TextField value={address} 
+                onChange={(e)=>setAddress(e.target.value)} 
+                className={classes.spaced} id="addressInputRecipe" 
+                fullWidth label="Destinatario (Address)" 
+                variant="filled" 
+                error={error}
+                helperText={error}
+                />
                 <Button onClick={()=>handleSubmit()} className={classes.spaced} variant="contained" color="secondary">Enviar</Button>
             </div>
             

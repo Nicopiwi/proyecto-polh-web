@@ -17,8 +17,7 @@ import { modifyUserName,
     modifyDireccion,
     modifyNombreEstablecimiento,
     modifyMatricula, 
-    modifyEmail, 
-    modifyPassword } from '../redux/actions/userActions'
+    modifyEmail } from '../redux/actions/userActions'
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -53,11 +52,9 @@ const Profile = (props) =>{
     const userType = useSelector(state => state.user.userType);
 
     const [editMode, setEditMode] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
     const [showPrivate, setShowPrivate] = useState(false);
     const [newUserName, setNewUserName] = useState(userName);
     const [newUserSurname, setNewUserSurname] = useState(userSurname);
-    const [newUserPassword, setNewUserPassword] = useState('');
     const [newUserDireccion, setNewUserDireccion] = useState(userDireccion);
     const [newUserMatricula, setNewUserMatricula] = useState(userMatricula);
     const [newUserEmail, setNewUserEmail] = useState(userEmail);
@@ -95,47 +92,12 @@ const Profile = (props) =>{
                     defaultValue={userSurname}
                     value={newUserSurname}
                     onChange={(e)=>setNewUserSurname(e.target.value)} />
-                    {editMode && <Button onClick={()=>dispatch(modifyUserName(newUserName, newUserSurname, userType))} variant="contained" color="secondary">Guardar</Button>}
+                    {editMode && <Button onClick={async ()=>{
+                        await dispatch(modifyUserName(newUserName, newUserSurname, userType))
+                    }} variant="contained" color="secondary">Guardar</Button>}
 
                 </div>
-                <div className={classes.container}>
-                <TextField
-                    id="email"
-                    type={'email'}
-                    label="Email"
-                    disabled={!editMode}
-                    className={classes.textInput + ' ' + classes.spaced}
-                    variant="filled"
-                    defaultValue={userEmail}
-                    value={newUserEmail}
-                    onChange={(e)=>setNewUserEmail(e.target.value)}
-                />
-                {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
-                </div>
-                <div className={classes.container}>
-                <TextField
-                id="password"
-                type={showPassword?'text':'password'}
-                label="Contraseña"
-                disabled={!editMode}
-                className={classes.spaced}
-                variant="filled"
-                defaultValue=""
-                value={newUserPassword}
-                onChange={(e)=>setNewUserPassword(e.target.value)}
-                InputProps={{
-                    endAdornment: (<InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={()=>setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>),
-                  }}
-              />
-              {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
-                </div>
+                
                 {userType==="farmacia"&&(
                 <div className={classes.container}>
                 <TextField
@@ -149,7 +111,9 @@ const Profile = (props) =>{
                     variant="filled"
                     defaultValue={userNombreEstablecimiento}
                 />
-                {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
+                {editMode && <Button onClick={async ()=>{
+                        await dispatch(modifyNombreEstablecimiento(newUserNombreEstablecimiento))
+                    }} variant="contained" color="secondary">Guardar</Button>}
                 </div>)}
                 {userType==="farmacia"&&(
                 <div className={classes.container}>
@@ -164,21 +128,38 @@ const Profile = (props) =>{
                     value={newUserDireccion}
                     onChange={(e)=>setNewUserDireccion(e.target.value)}
                 />
-                {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
+                {editMode && <Button onClick={async ()=>{
+                        await dispatch(modifyDireccion(newUserDireccion))
+                    }} variant="contained" color="secondary">Guardar</Button>}
                 </div>)}
                 <div className={classes.container}>
                 <TextField
                     id="matricula"
                     type={'number'}
                     label="Matrícula"
-                    disabled={!editMode}
+                    disabled={userType==='medico' || !editMode}
                     className={classes.textInput + ' ' + classes.spaced}
                     variant="filled"
                     defaultValue={userMatricula}
                     value={newUserMatricula}
                     onChange={(e)=>setNewUserMatricula(e.target.value)}
                 />
-                {editMode && <Button variant="contained" color="secondary">Guardar</Button>}
+                {userType==='farmacia' && editMode && <Button onClick={async ()=>{
+                        await dispatch(modifyMatricula(newUserMatricula))
+                    }} variant="contained" color="secondary">Guardar</Button>}
+                </div>
+                <div className={classes.container}>
+                <TextField
+                    id="email"
+                    type={'email'}
+                    label="Email"
+                    disabled
+                    className={classes.textInput + ' ' + classes.spaced}
+                    variant="filled"
+                    defaultValue={userEmail}
+                    value={newUserEmail}
+                    onChange={(e)=>setNewUserEmail(e.target.value)}
+                />
                 </div>
                 <div className={classes.container}>
                 <TextField
@@ -219,7 +200,7 @@ const Profile = (props) =>{
                           aria-label="toggle password visibility"
                           onClick={()=>setShowPrivate(!showPrivate)}
                         >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                          {showPrivate ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
                       </InputAdornment>),
                       }}

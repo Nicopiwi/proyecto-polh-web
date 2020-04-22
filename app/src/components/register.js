@@ -103,6 +103,7 @@ const Register = (props) => {
               method:'POST',
               headers:{
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
               },
               body:JSON.stringify(reqBody)
             })
@@ -142,7 +143,7 @@ const Register = (props) => {
     <React.Fragment>
       <form className={classes.container} noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader classes={{title:classes.cardHeaderTitle}} avatar={<img height="30" width="30" src={require('../assets/logo.png')}></img>} className={classes.header} title="Regístrate en Pölh Recetas" />
+          <CardHeader classes={{title:classes.cardHeaderTitle}} avatar={<img alt="logo" height="30" width="30" src={require('../assets/logo.png')}></img>} className={classes.header} title="Regístrate en Pölh Recetas" />
           <CardContent>
             <div>
             <TextField
@@ -275,7 +276,7 @@ const Register = (props) => {
               className={classes.loginBtn}
               onClick={()=>handleRegister()}
               disabled={isButtonDisabled}>
-             {loading && <CircularProgress color="secondary" size={14} />}
+             {loading && <CircularProgress color="primary" size={14} />}
             {!loading && 'Registrarse'}
             </Button>
           </CardActions>

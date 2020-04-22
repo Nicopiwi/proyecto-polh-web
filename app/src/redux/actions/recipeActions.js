@@ -1,6 +1,7 @@
 import APIs from '../../APIs'
 
-export const fetchRecipes = (userData) => dispatch => {
+export const fetchRecipes = (userType) => dispatch => {
+  const uri = userType==='medico'?APIs.rest.updateMedico:APIs.rest.updateFarmacia
   let headers = new Headers();
   headers.append('Content-Type', 'application/json');
   headers.append('token', localStorage.getItem('userToken'));

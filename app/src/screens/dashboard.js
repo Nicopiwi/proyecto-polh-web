@@ -144,8 +144,8 @@ function DashboardScreen(props) {
             >
               <MenuIcon />
             </IconButton>
-            <span class={classes.marginText}>
-                  <img src={require('../assets/logo.png')} height="42" width="42"/>
+            <span className={classes.marginText}>
+                  <img alt="logo" src={require('../assets/logo.png')} height="42" width="42"/>
               </span>
 
             <Typography variant="h6" noWrap>
