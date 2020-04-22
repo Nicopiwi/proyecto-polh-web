@@ -5,7 +5,7 @@ export const fetchRecipes = (userType) => dispatch => {
   let headers = new Headers();
   headers.append('Content-Type', 'application/json');
   headers.append('token', localStorage.getItem('userToken'));
-  fetch(APIs.rest.getRecetasMedico, {method:'GET', headers})
+  fetch(uri, {method:'GET', headers})
     .then(res => res.json())
     .then(res => {
         console.log(res)

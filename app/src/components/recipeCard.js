@@ -56,8 +56,16 @@ export default function RecipeCard(props) {
     const [modalStyle] = useState(getModalStyle);
     const [tiempoHace, setTiempoHace] = useState('')
     useEffect(()=>{
-      tiempo.config({ locale: 'es' });
-      setTiempoHace(tiempo.format(props.date, new Date()));
+	let created = new Date(props.date)
+	let now = new Date()
+	if (now.getTime() - created.getTime() >= 10000){
+		tiempo.config({ locale: 'es' });
+      		setTiempoHace(tiempo.format(props.date, new Date()));
+	}
+	else{
+		setTiempoHace('hace menos de 10 segundos')
+	}
+      
     }, [])
     const classes = useStyles();
 
@@ -96,7 +104,7 @@ export default function RecipeCard(props) {
             Address del paciente: {props.address}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Creada hace {tiempoHace}
+            Creada {tiempoHace}
           </Typography>
           </div>
           </div>
