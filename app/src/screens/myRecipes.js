@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) =>
 
 const MyRecipes = (props) =>{
     const dispatch = useDispatch();
-    //const recipesList = useSelector(state => state.recipe.recipes.reverse());
-    const recipesList = []
+    const recipesList = useSelector(state => state.recipe.recipes.reverse());
+    
     const userType = useSelector(state => state.user.userType);
     const classes = useStyles();
     const [openModal, setOpenModal] = useState(false);
