@@ -114,12 +114,12 @@ const Register = (props) => {
               props.history.push('/dashboard')
           }
           catch(e){
-            console.log('error')
+            //console.log('error')
             setLoading(false)
             setIsButtonDisabled(false)
             setError(true)
             setHelperText('Error en el registro. Pruebe más tarde')
-            console.log(e)
+            //console.log(e)
           }
          
         }
@@ -228,8 +228,8 @@ const Register = (props) => {
                   id="obrasSociales"
                   type="text"
                   label="Obras sociales"
-                  placeholder="Obra social 1, obra social 2"
-                  helperText="Separadas por coma (,)"
+                  placeholder="OBRA1,OBRA2"
+                  helperText="Separadas por coma (,). Pueden ser OSDE, SWISS, MEDICUS, GALENO, OMINT, SANCOR, PAMI o Ninguna"
                   margin="normal"
                   value={obrasSociales}
                   onChange={(e)=>setObraSociales(e.target.value)}
