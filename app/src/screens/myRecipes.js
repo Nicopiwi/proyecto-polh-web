@@ -48,7 +48,7 @@ const MyRecipes = (props) =>{
       setOpenModal(true)
       let headers = new Headers();
       headers.append('token', localStorage.getItem('userToken'));
-      let text = await fetch(userType==='medico'?APIs.rest.transformHashToText:APIs.rest.transformHashToTextFarmacia + recipeText, {method:'GET', headers})
+      let text = await fetch(userType==='medico'?(APIs.rest.transformHashToText + recipeText):(APIs.rest.transformHashToTextFarmacia + recipeText), {method:'GET', headers})
       let textJson = await text.json()
       console.log(textJson)
       setRecetaTexto(textJson.result.message)
