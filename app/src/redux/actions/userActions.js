@@ -23,9 +23,9 @@ export const login = (email, password, type) => dispatch => {
     })
       .then(res => res.json())
       .then(res => {
-          console.log('cargando')
+          //console.log('cargando')
           localStorage.setItem('userToken', res.token)
-          console.log(res.user.publicKey)
+          //console.log(res.user.publicKey)
           dispatch({
             type: 'LOGIN',
             payload: {
@@ -46,7 +46,7 @@ export const login = (email, password, type) => dispatch => {
         }
       )
       .catch((e)=>{
-        console.log(e)
+        //console.log(e)
         dispatch({
           type: 'LOGIN_ERROR',
           payload: e
@@ -70,7 +70,7 @@ export const login = (email, password, type) => dispatch => {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
-    console.log(type)
+    //console.log(type)
     //console.log(JSON.stringify({emaill:email, passwordd:password}))
     return fetch(api_url, {method: 'POST',
       body: JSON.stringify({email}),
@@ -78,7 +78,7 @@ export const login = (email, password, type) => dispatch => {
     })
       .then(res => res.json())
       .then(res => {
-          console.log(res)
+          //console.log(res)
           if (res.status && res.status === 400){
             return false
           }
@@ -86,7 +86,7 @@ export const login = (email, password, type) => dispatch => {
         }
       )
       .catch((e)=>{
-        console.log(e)
+        //console.log(e)
         dispatch({
           type: 'LOGIN_ERROR',
           payload: e
@@ -109,9 +109,9 @@ export const modifyUserName = (userName, userSurname, userType) => dispatch => {
   headers.append('Accept', 'application/json');
   headers.append('Access-Control-Allow-Origin', '*');
   headers.append('token', localStorage.getItem('userToken'));
-  console.log(localStorage.getItem('userToken'))
-  console.log('modificando...')
-  console.log(`${userName} ${userSurname} ${userType}`)
+  //console.log(localStorage.getItem('userToken'))
+  //console.log('modificando...')
+  //console.log(`${userName} ${userSurname} ${userType}`)
   
   return fetchTimeout(uri, 
     {method:'PUT', 
@@ -130,7 +130,7 @@ export const modifyUserName = (userName, userSurname, userType) => dispatch => {
       return true
     })
     .catch(e=>{
-      console.log(e)
+      //console.log(e)
       return false
     })
 };
@@ -143,7 +143,7 @@ export const modifyMatricula = (userMatricula) => dispatch => {
   headers.append('Accept', 'application/json');
   headers.append('Access-Control-Allow-Origin', '*');
   headers.append('token', localStorage.getItem('userToken'));
-  console.log('modificando...')
+  //console.log('modificando...')
   
   return fetchTimeout(uri, 
     {method:'PUT', 
@@ -162,7 +162,7 @@ export const modifyMatricula = (userMatricula) => dispatch => {
       return true
     })
     .catch(e=>{
-      console.log(e)
+      //console.log(e)
       return false
     })
 };
@@ -174,7 +174,7 @@ export const modifyEmail = (userEmail, userType) => dispatch => {
   headers.append('Accept', 'application/json');
   headers.append('Access-Control-Allow-Origin', '*');
   headers.append('token', localStorage.getItem('userToken'));
-  console.log('modificando...')
+  //console.log('modificando...')
   
   return fetchTimeout(uri, 
     {method:'PUT', 
@@ -192,7 +192,7 @@ export const modifyEmail = (userEmail, userType) => dispatch => {
       return true
     })
     .catch(e=>{
-      console.log(e)
+      //console.log(e)
       return false
     })
 };
@@ -204,7 +204,7 @@ export const modifyDireccion = (userDireccion) => dispatch => {
   headers.append('Accept', 'application/json');
   headers.append('Access-Control-Allow-Origin', '*');
   headers.append('token', localStorage.getItem('userToken'));
-  console.log('modificando...')
+  //console.log('modificando...')
   
   return fetchTimeout(uri, 
     {method:'PUT', 
@@ -212,7 +212,7 @@ export const modifyDireccion = (userDireccion) => dispatch => {
     body: JSON.stringify({direccion:userDireccion})}, 30000)
     .then(res=>res.json())
     .then(res=>{
-      console.log(res)
+      //console.log(res)
       if (res.status && res.status === 400){
         return false
       }
@@ -226,7 +226,7 @@ export const modifyDireccion = (userDireccion) => dispatch => {
       }
     })
     .catch(e=>{
-      console.log(e)
+      //console.log(e)
       return false
     })
 };
@@ -238,7 +238,7 @@ export const modifyNombreEstablecimiento = (userNombreEstablecimiento) => dispat
   headers.append('Accept', 'application/json');
   headers.append('Access-Control-Allow-Origin', '*');
   headers.append('token', localStorage.getItem('userToken'));
-  console.log('modificando...')
+  //console.log('modificando...')
   
   return fetchTimeout(uri, 
     {method:'PUT', 
@@ -247,7 +247,7 @@ export const modifyNombreEstablecimiento = (userNombreEstablecimiento) => dispat
     .then(res=>res.json())
     .then(res=>{
       if (res.status && res.status === 400){
-        console.log('falló')
+        //console.log('falló')
         return false
       }
       dispatch({
@@ -258,7 +258,7 @@ export const modifyNombreEstablecimiento = (userNombreEstablecimiento) => dispat
       return true
     })
     .catch(e=>{
-      console.log(e)
+      //console.log(e)
       return false
     })
 };

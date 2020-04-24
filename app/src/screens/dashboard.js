@@ -21,6 +21,7 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import MakeRecipe from "./makeRecipe";
 import MyRecipes from "./myRecipes";
 import Profile from "./profile";
+import NotFound from './notFound'
 
 import { useSelector } from "react-redux";
 
@@ -88,7 +89,7 @@ function DashboardScreen(props) {
   };
 
   const logOut = () => {
-    console.log(userType);
+    //console.log(userType);
     localStorage.removeItem("userToken");
     props.history.push("/");
   };
@@ -218,6 +219,7 @@ function DashboardScreen(props) {
             }
           />
           <Route exact path="/dashboard/cuenta" component={Profile} />
+
         </Switch>
       </main>
     </div>

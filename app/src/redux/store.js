@@ -16,8 +16,8 @@ const encryptor = createEncryptor({
   secretKey: process.env.REACT_APP_ENCRYPT_PHRASE,
   onError: function(error) {
     // Handle the error.
-    console.log('error encrypt')
-    console.log(error)
+    //console.log('error encrypt')
+    //console.log(error)
   }
 })
 

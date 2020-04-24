@@ -8,7 +8,7 @@ export const fetchRecipes = (userType) => dispatch => {
   fetch(uri, {method:'GET', headers})
     .then(res => res.json())
     .then(res => {
-        console.log(res)
+        //console.log(res)
         dispatch({
           type: 'REPLACE_RECIPES',
           payload: res.recipes
@@ -41,7 +41,7 @@ export const createRecipe = (recipeMedic, recipePatient, recipeText) => dispatch
       )
       .catch((e)=>{
         
-        console.log(e)
+        //console.log(e)
         return false
       })
 };

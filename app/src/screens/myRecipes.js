@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) =>
 
 const MyRecipes = (props) =>{
     const dispatch = useDispatch();
-    const recipesList = useSelector(state => state.recipe.recipes.reverse());
+    //const recipesList = useSelector(state => state.recipe.recipes.reverse());
+    const recipesList = []
     const userType = useSelector(state => state.user.userType);
     const classes = useStyles();
     const [openModal, setOpenModal] = useState(false);
@@ -63,9 +64,10 @@ const MyRecipes = (props) =>{
     
     return (
         <React.Fragment>
-            {(!recipesList || recipesList.length==0)?(
-                <h2 id="emptyListText">{userType==="medico"?'Aquí aparecerán las recetas que has creado':'Aquí aparecerán las recetas que le han presentado a su farmacia'}</h2>
-            ):(
+            {(!recipesList || recipesList.length==0)?(<React.Fragment>
+                <img src={require(userType==='medico'?'../assets/medicoRecipes.svg':'../assets/farmaciaRecipes.svg')} alt="Página no encontrada" width="400" height="400"></img>
+                <h2 className={classes.spaced} id="emptyListText">{userType==="medico"?'Aquí aparecerán las recetas que has creado':'Aquí aparecerán las recetas que le han presentado a su farmacia'}</h2>
+            </React.Fragment>):(
             <ul id="recipesList">
             {recipesList.map((item)=>{
                 return (

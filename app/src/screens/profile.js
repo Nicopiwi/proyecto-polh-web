@@ -59,7 +59,7 @@ const Profile = (props) =>{
     const [newUserMatricula, setNewUserMatricula] = useState(userMatricula);
     const [newUserEmail, setNewUserEmail] = useState(userEmail);
     const [newUserNombreEstablecimiento, setNewUserNombreEstablecimiento] = useState(userNombreEstablecimiento);
-    
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
 
     return (
@@ -93,8 +93,10 @@ const Profile = (props) =>{
                     value={newUserSurname}
                     onChange={(e)=>setNewUserSurname(e.target.value)} />
                     {editMode && <Button onClick={async ()=>{
+                        setLoading(true)
                         await dispatch(modifyUserName(newUserName, newUserSurname, userType))
-                    }} variant="contained" color="secondary">Guardar</Button>}
+                        setLoading(false)
+                    }} variant="contained" disabled={loading} color="secondary">Guardar</Button>}
 
                 </div>
                 
@@ -112,8 +114,10 @@ const Profile = (props) =>{
                     defaultValue={userNombreEstablecimiento}
                 />
                 {editMode && <Button onClick={async ()=>{
+                        setLoading(true)
                         await dispatch(modifyNombreEstablecimiento(newUserNombreEstablecimiento))
-                    }} variant="contained" color="secondary">Guardar</Button>}
+                        setLoading(false)
+                    }} variant="contained" disabled={loading} color="secondary">Guardar</Button>}
                 </div>)}
                 {userType==="farmacia"&&(
                 <div className={classes.container}>
@@ -129,8 +133,10 @@ const Profile = (props) =>{
                     onChange={(e)=>setNewUserDireccion(e.target.value)}
                 />
                 {editMode && <Button onClick={async ()=>{
+                        setLoading(true)
                         await dispatch(modifyDireccion(newUserDireccion))
-                    }} variant="contained" color="secondary">Guardar</Button>}
+                        setLoading(false)
+                    }} variant="contained" disabled={loading} color="secondary">Guardar</Button>}
                 </div>)}
                 <div className={classes.container}>
                 <TextField
@@ -145,8 +151,10 @@ const Profile = (props) =>{
                     onChange={(e)=>setNewUserMatricula(e.target.value)}
                 />
                 {userType==='farmacia' && editMode && <Button onClick={async ()=>{
+                        setLoading(true)
                         await dispatch(modifyMatricula(newUserMatricula))
-                    }} variant="contained" color="secondary">Guardar</Button>}
+                        setLoading(false)
+                    }} variant="contained" disabled={loading} color="secondary">Guardar</Button>}
                 </div>
                 <div className={classes.container}>
                 <TextField

@@ -13,7 +13,6 @@ export default function(state = initialState, action) {
 
         //Se le debe pasar un ARRAY en el payload
         case 'SAVE_RECIPE':
-            console.log('ele')
             return {
                 ...state,
                 recipes: [...state.recipes, ...action.payload]
