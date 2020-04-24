@@ -30,7 +30,6 @@ function App() {
                 <Route path="/dashboard" render={(props)=>(
                   localStorage.getItem('userToken')?(<DashboardScreen {...props}/>):(<Redirect to="/"></Redirect>)
                 )}/>
-                <Redirect to="/" />
             </div>
           </Router>
         </MuiThemeProvider>
