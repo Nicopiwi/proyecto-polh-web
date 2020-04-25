@@ -119,6 +119,7 @@ export const modifyUserName = (userName, userSurname, userType) => dispatch => {
     body: JSON.stringify({name: userName, surname: userSurname})}, 30000)
     .then(res=>res.json())
     .then(res=>{
+      console.log(res)
       if (res.status && res.status === 400){
         return false
       }

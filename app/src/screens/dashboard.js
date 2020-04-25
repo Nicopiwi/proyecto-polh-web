@@ -90,7 +90,7 @@ function DashboardScreen(props) {
 
   const logOut = () => {
     //console.log(userType);
-    localStorage.removeItem("userToken");
+    localStorage.clear()
     props.history.push("/");
   };
 

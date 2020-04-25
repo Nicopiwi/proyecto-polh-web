@@ -12,6 +12,7 @@
     "dotenv": "^8.2.0",
     "immutable": "^4.0.0-rc.12",
     "jsonwebtoken": "^8.5.1",
+    "localforage": "^1.7.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
