@@ -12,16 +12,19 @@ import ListItemText from "@material-ui/core/ListItemText";
 import RecetaIcon from "@material-ui/icons/Assignment";
 import CrearIcon from "@material-ui/icons/Create";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AllInBox from '@material-ui/icons/AllInbox'
 import MenuIcon from "@material-ui/icons/Menu";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+
 import MakeRecipe from "./makeRecipe";
 import MyRecipes from "./myRecipes";
 import Profile from "./profile";
-import NotFound from './notFound'
+import UploadStock from './uploadStock'
+
 
 import { useSelector } from "react-redux";
 
@@ -126,6 +129,20 @@ function DashboardScreen(props) {
           </ListItem>
         )}
 
+        {userType === "farmacia" && (
+          <ListItem
+            button
+            onClick={() => {
+              props.history.push("/dashboard/uploadstock");
+            }}
+          >
+            <ListItemIcon>
+              <AllInBox />
+            </ListItemIcon>
+            <ListItemText primary={"Stock"} />
+          </ListItem>
+        )}
+
         <Divider />
         <ListItem
           button
@@ -213,6 +230,17 @@ function DashboardScreen(props) {
             render={() =>
               userType === "medico" ? (
                 <MakeRecipe />
+              ) : (
+                <Redirect to="/dashboard"></Redirect>
+              )
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/uploadstock"
+            render={() =>
+              userType === "farmacia" ? (
+                <UploadStock />
               ) : (
                 <Redirect to="/dashboard"></Redirect>
               )
