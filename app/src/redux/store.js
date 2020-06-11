@@ -8,15 +8,6 @@ import createEncryptor from 'redux-persist-transform-encrypt'
 const initialState = {}
 const middleware = [thunk];
 
-const encryptor = createEncryptor({
-  secretKey: 'KeY-PohLRECetAsPROjEcTO',
-  onError: function(error) {
-    // Handle the error.
-    //console.log('error encrypt')
-    //console.log(error)
-  }
-})
-
 const persistConfig = {
   
   key: 'root',
